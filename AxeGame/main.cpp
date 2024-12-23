@@ -12,9 +12,14 @@ int main(int argc, char const *argv[])
     int targetFPS = 60;
 
     // Characters
-    int circleRadius = 100;
+    int circleRadius = 60;
     Color circleColor = BLUE;
     float circleMoveSpeed = 1000.0;
+
+    int axeWidth = 50;
+    int axeHeight = 75;
+    Color rectangleColor = RED;
+    float axeMoveSpeed = 500.0;
 
     // Derived Parameters
     int windowMidCol = round(gameWidth / 2);
@@ -25,43 +30,62 @@ int main(int argc, char const *argv[])
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
     SetTargetFPS(targetFPS);
 
-    // Circle start point 
+    // Start points
     int circleRow = windowMidRow;
-    int circleCol = windowMidCol;
+    int circleCol = 0;
+    int axeRow = 0;
+    int axeCol = windowMidCol;
+
     while (!WindowShouldClose())
     {
-        GetUserInputCircleCol(circleMoveSpeed, circleCol, gameWidth, circleRadius);
-        GetUserInputCircleRow(circleMoveSpeed, circleRow, gameHeight, circleRadius);
+        // Game Logic
+        // Circle Movement
+        GetUserInputCol(circleMoveSpeed, circleCol, gameWidth, circleRadius);
+        GetUserInputRow(circleMoveSpeed, circleRow, gameHeight, circleRadius);
 
+        // Axe Movement
+        int featureSize = round(axeHeight/2);
+        GetTimeShiftedRow(axeMoveSpeed, axeRow, gameHeight, featureSize);
+
+        // Game Logc Ends
         BeginDrawing();
         ClearBackground(WHITE);
         DrawCircle(circleCol, circleRow, circleRadius, circleColor);
+        DrawRectangle(axeCol, axeRow, axeWidth, axeHeight, rectangleColor);
         EndDrawing();
     }
 
     return 0;
 }
 
-void GetUserInputCircleCol(float circleMoveSpeed, int &circleCol, int gameWidth, int circleRadius)
+void GetUserInputCol(float moveSpeed, int &inputCol, int gameWidth, int featureSize)
 {
     int colOffset = 0;
-    if (IsKeyDown(KEY_RIGHT)) { colOffset += (int)round(GetFrameTime() * circleMoveSpeed); }
-    if (IsKeyDown(KEY_LEFT)) { colOffset -= (int)round(GetFrameTime() * circleMoveSpeed); }
-    circleCol += colOffset;
+    if (IsKeyDown(KEY_RIGHT)) { colOffset += (int)round(GetFrameTime() * moveSpeed); }
+    if (IsKeyDown(KEY_LEFT)) { colOffset -= (int)round(GetFrameTime() * moveSpeed); }
+    inputCol += colOffset;
 
     // Check for edges, loop around
-    if (circleCol > gameWidth + circleRadius) { circleCol = -circleRadius; }
-    else if (circleCol < -circleRadius) { circleCol = gameWidth + circleRadius; }
+    if (inputCol > (gameWidth + featureSize)) { inputCol = -featureSize; }
+    else if (inputCol < -featureSize) { inputCol = gameWidth + featureSize; }
 }
 
-void GetUserInputCircleRow(float circleMoveSpeed, int &circleRow, int gameHeight, int circleRadius)
+void GetUserInputRow(float moveSpeed, int &inputRow, int gameHeight, int featureSize)
 {
     int rowOffset = 0;
-    if (IsKeyDown(KEY_DOWN)) { rowOffset += (int)round(GetFrameTime() * circleMoveSpeed); }
-    if (IsKeyDown(KEY_UP)) { rowOffset -= (int)round(GetFrameTime() * circleMoveSpeed); }
-    circleRow += rowOffset;
+    if (IsKeyDown(KEY_DOWN)) { rowOffset += (int)round(GetFrameTime() * moveSpeed); }
+    if (IsKeyDown(KEY_UP)) { rowOffset -= (int)round(GetFrameTime() * moveSpeed); }
+    inputRow += rowOffset;
 
     // Check for edges, loop around
-    if (circleRow > gameHeight + circleRadius) { circleRow = -circleRadius; }
-    else if (circleRow < -circleRadius) { circleRow = gameHeight + circleRadius; }
+    if (inputRow > (gameHeight + featureSize)) { inputRow = -featureSize; }
+    else if (inputRow < -featureSize) { inputRow = gameHeight + featureSize; }
+}
+
+void GetTimeShiftedRow(float &moveSpeed, int &inputRow, int gameHeight, int featureSize)
+{
+    inputRow += (int)round(GetFrameTime() * moveSpeed);
+
+    // Check for edges, flip direction
+    if (inputRow > (gameHeight + featureSize) || (inputRow < -featureSize)) { moveSpeed = -moveSpeed; }
 }
