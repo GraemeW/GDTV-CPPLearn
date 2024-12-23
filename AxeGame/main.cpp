@@ -9,12 +9,18 @@ int main(int argc, char const *argv[])
     std::string gameTitle = "Axe Game";
 
     // Misc Game Input
-    float rootBeer = 1.99;
-    double cheeseBurger = 5.99;
-    bool shouldHaveLunch = true;
+    float rootBeer{1.99};
+    double cheeseBurger{5.99};
+    bool shouldHaveLunch{true};
 
     // Execution
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
+    while (true)
+    {
+        BeginDrawing();
+        ClearBackground(RED);
+        EndDrawing();
+    }
 
     return 0;
 }
