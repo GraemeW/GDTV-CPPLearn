@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <string>
+#include <iostream>
 #include "main.h"
 
 int main(int argc, char const *argv[])
@@ -47,7 +48,13 @@ int main(int argc, char const *argv[])
         int featureSize = round(axeHeight/2);
         GetTimeShiftedRow(axeMoveSpeed, axeRow, gameHeight, featureSize);
 
-        // Game Logc Ends
+        // Check for collisions
+        if (DidEntitiesCollide(circleRow, circleCol, circleRadius, axeRow, axeCol, axeWidth, axeHeight))
+        {
+            std::cout << "Player circle collided with axe!" << std::endl;
+        }
+
+        // Game Logic Ends
         BeginDrawing();
         ClearBackground(WHITE);
         DrawCircle(circleCol, circleRow, circleRadius, circleColor);
@@ -88,4 +95,34 @@ void GetTimeShiftedRow(float &moveSpeed, int &inputRow, int gameHeight, int feat
 
     // Check for edges, flip direction
     if (inputRow > (gameHeight + featureSize) || (inputRow < -featureSize)) { moveSpeed = -moveSpeed; }
+}
+
+bool DidEntitiesCollide(int playerRow, int playerCol, int playerRadius, int axeRow, int axeCol, int axeWidth, int axeHeight)
+{
+    int playerLeftColBound, playerRightColBound, playerTopRowBound, playerBottomRowBound;
+    int axeLeftColBound, axeRightColBound, axeTopRowBound, axeBottomRowBound;
+
+    GetCircleBounds(playerCol, playerRow, playerRadius, playerLeftColBound, playerRightColBound, playerTopRowBound, playerBottomRowBound);
+    GetRectangleBounds(axeCol, axeRow, axeWidth, axeHeight, axeLeftColBound, axeRightColBound, axeTopRowBound, axeBottomRowBound);
+
+    bool colOverlap = (playerRightColBound > axeLeftColBound) && (playerLeftColBound < axeRightColBound);
+    bool rowOverlap = (playerBottomRowBound > axeTopRowBound) && (playerTopRowBound < axeBottomRowBound);
+
+    return (colOverlap && rowOverlap);
+}
+
+void GetCircleBounds(int col, int row, int radius, int &leftColBound, int &rightColBound, int &topRowBound, int &bottomRowBound)
+{
+    leftColBound = col - radius;
+    rightColBound = col + radius;
+    topRowBound = row - radius;
+    bottomRowBound = row + radius;
+}
+
+void GetRectangleBounds(int col, int row, int width, int height, int &leftColBound, int &rightColBound, int &topRowBound, int &bottomRowBound)
+{
+    leftColBound = col;
+    topRowBound = row;
+    rightColBound = col + width;
+    bottomRowBound = row + height;
 }
