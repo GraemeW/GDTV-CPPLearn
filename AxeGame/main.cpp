@@ -26,6 +26,9 @@ int main(int argc, char const *argv[])
     int windowMidCol = round(gameWidth / 2);
     int windowMidRow = round(gameHeight / 2);
 
+    // State
+    bool isGameOver = false;
+
     // ***Execution***
     // Init Window/Settings
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
@@ -52,14 +55,24 @@ int main(int argc, char const *argv[])
         if (DidEntitiesCollide(circleRow, circleCol, circleRadius, axeRow, axeCol, axeWidth, axeHeight))
         {
             std::cout << "Player circle collided with axe!" << std::endl;
+            isGameOver = true;
         }
-
         // Game Logic Ends
+
+        // Rendering
         BeginDrawing();
         ClearBackground(WHITE);
-        DrawCircle(circleCol, circleRow, circleRadius, circleColor);
-        DrawRectangle(axeCol, axeRow, axeWidth, axeHeight, rectangleColor);
+        if (isGameOver)
+        {
+            DrawText("Game Over!", windowMidCol, windowMidRow, 20, RED);
+        }
+        else
+        {
+            DrawCircle(circleCol, circleRow, circleRadius, circleColor);
+            DrawRectangle(axeCol, axeRow, axeWidth, axeHeight, rectangleColor);
+        }
         EndDrawing();
+        // Rendering Ends
     }
 
     return 0;
