@@ -2,14 +2,19 @@
 
 int main(int argc, char const *argv[])
 {
-    // Game Parameters
-    float gravity{50000.0};
-    float moveSpeed{500.0};
-    float jumpForce{150000.0};
+    // World Parameters
+    float gravityAcceleration{9.8};
+
+    // Character Parameters
+    float jumpForce{15.0};
+    float jumpBufferTime{0.15};
+    float characterMass{1.0};
+    float moveSpeed{5.0};
 
     // State
     float yVelocity{0};
-    int posY{gameHeight - characterHeight};
+    float jumpTimer{999.0};
+    int yPosition{gameHeight - characterHeight};
 
     // Initialization
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
@@ -18,22 +23,27 @@ int main(int argc, char const *argv[])
     // Main Game Loop
     while (!WindowShouldClose())
     {
-        // State Updates
-        yVelocity = gravity * GetFrameTime();
-        if (IsKeyDown(KEY_SPACE))
+        // Physics Updates
+        yVelocity += gravityAcceleration * GetScaledFrameTime();
+        if (IsKeyDown(KEY_SPACE) && yPosition == (gameHeight - characterHeight))
         {
-            yVelocity -= jumpForce * GetFrameTime();
+            yVelocity = -(jumpForce / characterMass) * GetScaledFrameTime();
+            jumpTimer = 0;
         }
+        if (jumpTimer < jumpBufferTime && IsKeyDown(KEY_SPACE)) { yVelocity -= (jumpForce / characterMass) * GetScaledFrameTime(); }
+
+        jumpTimer += GetFrameTime();
+        ClampYVelocity(yVelocity, yPosition, gameHeight, characterHeight);
 
         // Update Position
-        posY += yVelocity * GetFrameTime();
-        posY = ClampYPosition(posY, gameHeight, characterHeight);
+        yPosition += yVelocity * GetScaledFrameTime();
+        yPosition = ClampYPosition(yPosition, gameHeight, characterHeight);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
 
-        DrawRectangle(gameWidth/2, posY, characterWidth, characterHeight, BLUE);
+        DrawRectangle(gameWidth/2, yPosition, characterWidth, characterHeight, BLUE);
 
         EndDrawing();
         // Rendering Ends
@@ -41,6 +51,17 @@ int main(int argc, char const *argv[])
 
     CloseWindow();
     return 0;
+}
+
+float GetScaledFrameTime()
+{
+    return (GetFrameTime() * 50.0); // Fixed
+}
+
+float ClampYVelocity(float yVelocity, int yPos, int gameHeight, int characterHeight)
+{
+    if (yPos >= (gameHeight - characterHeight) && yVelocity > 0) { yVelocity = 0; }
+    return yVelocity;
 }
 
 int ClampYPosition(int yPos, int gameHeight, int characterHeight)

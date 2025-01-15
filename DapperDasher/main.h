@@ -16,4 +16,6 @@ const int characterWidth{50};
 const int characterHeight{80};
 
 // Methods
+float GetScaledFrameTime();
+float ClampYVelocity(float yVelocity, int yPos, int gameHeight, int characterHeight);
 int ClampYPosition(int yPos, int gameHeight, int characterHeight);
