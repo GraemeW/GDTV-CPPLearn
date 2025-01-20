@@ -11,10 +11,6 @@ const int gameHeight{600};
 const std::string gameTitle{"Dapper Dasher"};
 const Color backgroundColor{WHITE};
 
-// Character Properties
-const int characterWidth{50};
-const int characterHeight{80};
-
 // Methods
 float GetScaledFrameTime();
 float ClampYVelocity(float yVelocity, int yPos, int gameHeight, int characterHeight);

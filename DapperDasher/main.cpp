@@ -2,53 +2,84 @@
 
 int main(int argc, char const *argv[])
 {
-    // World Parameters
+    // Volatile World Parameters
+    float animationRate{12.0}; // fps
     float gravityAcceleration{9.8};
 
-    // Character Parameters
+    // Volatile Character Parameters
     float jumpForce{15.0};
     float jumpBufferTime{0.15};
     float characterMass{1.0};
-    float moveSpeed{5.0};
+
+    // Derived Settings
+    float animationFramePeriod = 1 / animationRate;
 
     // State
+    float runningTime{0};
     float yVelocity{0};
     float jumpTimer{999.0};
-    int yPosition{gameHeight - characterHeight};
+    bool isInAir(false);
 
     // Initialization
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
     SetTargetFPS(targetFPS);
 
+    // Character Properties
+    // Note:  Texture loading must be done AFTER window initialization in RayLib
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    Rectangle scarfyRec;
+    scarfyRec.width = scarfy.width/6;
+    scarfyRec.height = scarfy.height;
+    scarfyRec.x = 0;
+    scarfyRec.y = 0;
+    Vector2 scarfyPosition;
+    scarfyPosition.x = gameWidth/2 - scarfyRec.width/2;
+    scarfyPosition.y = gameHeight - scarfyRec.height;
+    int animationFrame{0};
+
     // Main Game Loop
-    while (!WindowShouldClose())
-    {
+    while (!WindowShouldClose()) {
+        // State Updates
+        isInAir = !(scarfyPosition.y == (gameHeight - scarfy.height));
+
         // Physics Updates
         yVelocity += gravityAcceleration * GetScaledFrameTime();
-        if (IsKeyDown(KEY_SPACE) && yPosition == (gameHeight - characterHeight))
-        {
+        if (IsKeyDown(KEY_SPACE) && !isInAir) {
             yVelocity = -(jumpForce / characterMass) * GetScaledFrameTime();
             jumpTimer = 0;
         }
         if (jumpTimer < jumpBufferTime && IsKeyDown(KEY_SPACE)) { yVelocity -= (jumpForce / characterMass) * GetScaledFrameTime(); }
 
         jumpTimer += GetFrameTime();
-        ClampYVelocity(yVelocity, yPosition, gameHeight, characterHeight);
+        ClampYVelocity(yVelocity, scarfyPosition.y, gameHeight, scarfy.height);
 
         // Update Position
-        yPosition += yVelocity * GetScaledFrameTime();
-        yPosition = ClampYPosition(yPosition, gameHeight, characterHeight);
+        scarfyPosition.y += yVelocity * GetScaledFrameTime();
+        scarfyPosition.y = ClampYPosition(scarfyPosition.y, gameHeight, scarfy.height);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
 
-        DrawRectangle(gameWidth/2, yPosition, characterWidth, characterHeight, BLUE);
+        // Update Animation Frame
+        runningTime += GetFrameTime();
+        if (runningTime >= animationFramePeriod) {
+            animationFrame++;
+            if (animationFrame > 5) {animationFrame = 0; } // End of animation queue
 
+            if (isInAir) { animationFrame = 3; } // Hold jump animation
+
+            scarfyRec.x = animationFrame * scarfy.width / 6;
+            runningTime = 0.0;
+        }
+
+        // Drawing
+        DrawTextureRec(scarfy, scarfyRec, scarfyPosition, WHITE);
         EndDrawing();
         // Rendering Ends
     }
 
+    UnloadTexture(scarfy);
     CloseWindow();
     return 0;
 }
