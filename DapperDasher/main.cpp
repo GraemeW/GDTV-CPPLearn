@@ -1,8 +1,10 @@
 #include "main.h"
 #include <string>
+#include <vector>
 
 int main(int argc, char const *argv[])
 {
+    /* TUNABLES */
     // Volatile World Parameters
     float animationRate{12.0}; // fps
     float gravityAcceleration{9.8};
@@ -11,16 +13,17 @@ int main(int argc, char const *argv[])
     string dasherTexturePath = "textures/scarfy.png";
     int dasherXFrameCount = 6;
     int dasherYFrameCount = 1;
-    float jumpForce{40.0};
-    float characterMass{1.0};
+    float jumpForce{80.0};
+    float characterMass{0.65};
     float jumpBufferTime{0.25};
 
     // Volatile Hazard Parameters
-    string nebulaTexturePath = "textures/12_nebula_spritesheet.png";
-    int nebulaXFrameCount{8};
-    int nebulaYFrameCount{8};
-    float nebulaSpeed{-5.0};
+    int maxNebulaCount{8};
+    Vector2 nebulaSpawnPeriod{0.2, 1.5};
+    float nebulaSpawnPeriodLimiter{0.5};
+    float nebulaSpeed{-25.0};
 
+    /* GAME CODE */
     // Initialization
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
     SetTargetFPS(targetFPS);
@@ -30,9 +33,8 @@ int main(int argc, char const *argv[])
     dasher->SetDasherProperties(jumpForce, characterMass, jumpBufferTime);
 
     // Nebula Properties
-    Nebula* nebula = new Nebula(nebulaTexturePath, nebulaXFrameCount, nebulaYFrameCount, gameWidth, gameHeight, animationRate);
-    nebula->OverridePosition(gameWidth, gameHeight - nebula->entityHeight);
-    nebula->SetNebulaSpeed(nebulaSpeed);
+    NebulaManager* nebulaManager = new NebulaManager(gameWidth, gameHeight, animationRate);
+    nebulaManager->SetNebulaManagerProperties(maxNebulaCount, nebulaSpawnPeriod, nebulaSpawnPeriodLimiter, nebulaSpeed);
 
     // Main Game Loop
     while (!WindowShouldClose()) {
@@ -40,6 +42,7 @@ int main(int argc, char const *argv[])
 
         // State Updates
         dasher->SetDasherState();
+        nebulaManager->SpawnNebulas(dt);
 
         // Physics Updates
         dasher->IncrementYVelocity(gravityAcceleration, dt);
@@ -49,25 +52,22 @@ int main(int argc, char const *argv[])
         }
         dasher->ClampVelocity();
         dasher->UpdatePosition(dt);
-        nebula->UpdatePosition(dt);
+        nebulaManager->UpdateNebulaPositions(dt);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
-        // Dasher
+
         dasher->UpdateAnimationFrame(dt);
         dasher->DrawEntity();
-
-        // Nebula
-        nebula->UpdateAnimationFrame(dt);
-        nebula->DrawEntity();
+        nebulaManager->AnimateAndDrawNebulas(dt);
 
         EndDrawing();
         // Rendering Ends
     }
 
     delete dasher;
-    delete nebula;
+    delete nebulaManager;
     CloseWindow();
     return 0;
 }

@@ -16,7 +16,7 @@ protected:
     ~Entity();
 
     // Properties
-    const float frameTimeScaler{50.0};
+    const float frameTimeScaler{25.0};
 
     // Cached
     Texture2D texture2D;

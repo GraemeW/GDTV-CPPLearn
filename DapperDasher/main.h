@@ -3,7 +3,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "Dasher.hpp"
-#include "Nebula.hpp"
+#include "NebulaManager.hpp"
 
 // ***Tunables***
 // Window + Game Settings

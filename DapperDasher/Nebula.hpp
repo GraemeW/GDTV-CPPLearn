@@ -17,6 +17,7 @@ private:
 
 public:
     // Methods
+    void InitializePosition();
     void SetNebulaSpeed(float xVelocity);
     bool IsNebulaOnScreen();
 

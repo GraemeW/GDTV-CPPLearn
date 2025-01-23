@@ -7,9 +7,11 @@
 #include "Nebula.hpp"
 
 void Nebula::SetNebulaSpeed(float xVelocity) { this->xVelocity = xVelocity; }
-bool Nebula::IsNebulaOnScreen()
-{
-    return entityPosition.x + entityWidth > 0;
+bool Nebula::IsNebulaOnScreen() { return entityPosition.x + entityWidth > 0; }
+
+void Nebula::InitializePosition() {
+    int yPosition = (gameHeight / 3) + ((double) std::rand() / (RAND_MAX)) * ((2 * gameHeight / 3) - entityHeight);
+    this->OverridePosition(gameWidth, yPosition);
 }
 
 void Nebula::UpdatePosition(float frameTime) {
@@ -22,7 +24,7 @@ void Nebula::UpdateAnimationFrame(float frameTime)
     if (runningTime >= animationFramePeriod) {
         animationFrame++;
 
-        if (animationFrame > 61) {animationFrame = 0; } // End of animation queue
+        if (animationFrame > 60) {animationFrame = 0; } // End of animation queue
 
         int xIndex = animationFrame % 8;
         int yIndex = animationFrame / 8;
