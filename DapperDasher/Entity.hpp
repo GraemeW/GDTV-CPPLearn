@@ -13,7 +13,7 @@ using std::string;
 class Entity
 {
 protected:
-    ~Entity();
+    virtual ~Entity() {UnloadTexture(texture2D);};
 
     // Properties
     const float frameTimeScaler{25.0};

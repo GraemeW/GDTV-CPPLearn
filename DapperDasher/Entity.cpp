@@ -25,10 +25,6 @@ Entity::Entity(string texturePath, int xFrameCount, int yFrameCount, int gameWid
     this->animationFramePeriod = (1.0 / animationFPS);
 }
 
-Entity::~Entity() {
-    UnloadTexture(texture2D);
-}
-
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
 float Entity::GetScaledFrameTime(float frameTime) { return (frameTime * frameTimeScaler); }
