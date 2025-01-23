@@ -8,7 +8,9 @@ int main(int argc, char const *argv[])
     float gravityAcceleration{9.8};
 
     // Volatile Character Parameters
-    string texturePath = "textures/scarfy.png";
+    string dasherTexturePath = "textures/scarfy.png";
+    int dasherXFrameCount = 6;
+    int dasherYFrameCount = 1;
     float jumpForce{40.0};
     float characterMass{1.0};
     float jumpBufferTime{0.25};
@@ -18,7 +20,7 @@ int main(int argc, char const *argv[])
     SetTargetFPS(targetFPS);
 
     // Character Properties
-    Dasher* dasher = new Dasher(texturePath, gameWidth, gameHeight, 1.0 / animationRate);
+    Dasher* dasher = new Dasher(dasherTexturePath, dasherXFrameCount, dasherYFrameCount, gameWidth, gameHeight, animationRate);
     dasher->SetDasherProperties(jumpForce, characterMass, jumpBufferTime);
 
     // Main Game Loop
@@ -41,7 +43,7 @@ int main(int argc, char const *argv[])
         BeginDrawing();
         ClearBackground(backgroundColor);
         dasher->UpdateAnimationFrame(dt);
-        dasher->DrawDasher();
+        dasher->DrawEntity();
         EndDrawing();
         // Rendering Ends
     }
