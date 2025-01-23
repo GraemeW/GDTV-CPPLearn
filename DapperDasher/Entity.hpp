@@ -25,6 +25,7 @@ protected:
 
     // State
     int animationFrame{0};
+    float runningTime{0};
 
 public:
     Entity(string texturePath, int xFrameCount, int yFrameCount, int gameWidth, int gameHeight, float animationFPS);
@@ -41,6 +42,7 @@ public:
     float GetScaledFrameTime(float frameTime);
 
     // Methods
+    void OverridePosition(float xPosition, float yPosition);
     virtual void UpdatePosition(float frameTime) = 0;
     virtual void UpdateAnimationFrame(float frameTime) = 0;
     void DrawEntity();

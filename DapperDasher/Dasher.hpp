@@ -22,7 +22,6 @@ private:
     float yVelocity{0};
     bool isInAir{false};
     float jumpTimer{999.0};
-    float runningTime{0};
 
 public:
     // Setters & Getters

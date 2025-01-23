@@ -15,6 +15,11 @@ int main(int argc, char const *argv[])
     float characterMass{1.0};
     float jumpBufferTime{0.25};
 
+    // Volatile Hazard Parameters
+    string nebulaTexturePath = "textures/12_nebula_spritesheet.png";
+    int nebulaXFrameCount = 8;
+    int nebulaYFrameCount = 8;
+
     // Initialization
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
     SetTargetFPS(targetFPS);
@@ -22,6 +27,10 @@ int main(int argc, char const *argv[])
     // Character Properties
     Dasher* dasher = new Dasher(dasherTexturePath, dasherXFrameCount, dasherYFrameCount, gameWidth, gameHeight, animationRate);
     dasher->SetDasherProperties(jumpForce, characterMass, jumpBufferTime);
+
+    // Nebula Properties
+    Nebula* nebula = new Nebula(nebulaTexturePath, nebulaXFrameCount, nebulaYFrameCount, gameWidth, gameHeight, animationRate);
+    nebula->OverridePosition(gameWidth, gameHeight - nebula->entityHeight);
 
     // Main Game Loop
     while (!WindowShouldClose()) {
@@ -38,12 +47,19 @@ int main(int argc, char const *argv[])
         }
         dasher->ClampVelocity();
         dasher->UpdatePosition(dt);
+        nebula->UpdatePosition(dt);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
+        // Dasher
         dasher->UpdateAnimationFrame(dt);
         dasher->DrawEntity();
+
+        // Nebula
+        nebula->UpdateAnimationFrame(dt);
+        nebula->DrawEntity();
+
         EndDrawing();
         // Rendering Ends
     }

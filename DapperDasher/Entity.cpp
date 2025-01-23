@@ -34,6 +34,11 @@ void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 /
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
 float Entity::GetScaledFrameTime(float frameTime) { return (frameTime * frameTimeScaler); }
 
+void Entity::OverridePosition(float xPosition, float yPosition) {
+    entityPosition.x = xPosition;
+    entityPosition.y = yPosition;
+}
+
 void Entity::DrawEntity() {
     DrawTextureRec(texture2D, frameRect, entityPosition, WHITE);
 }
