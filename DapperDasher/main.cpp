@@ -17,8 +17,9 @@ int main(int argc, char const *argv[])
 
     // Volatile Hazard Parameters
     string nebulaTexturePath = "textures/12_nebula_spritesheet.png";
-    int nebulaXFrameCount = 8;
-    int nebulaYFrameCount = 8;
+    int nebulaXFrameCount{8};
+    int nebulaYFrameCount{8};
+    float nebulaSpeed{-5.0};
 
     // Initialization
     InitWindow(gameWidth, gameHeight, gameTitle.c_str());
@@ -31,6 +32,7 @@ int main(int argc, char const *argv[])
     // Nebula Properties
     Nebula* nebula = new Nebula(nebulaTexturePath, nebulaXFrameCount, nebulaYFrameCount, gameWidth, gameHeight, animationRate);
     nebula->OverridePosition(gameWidth, gameHeight - nebula->entityHeight);
+    nebula->SetNebulaSpeed(nebulaSpeed);
 
     // Main Game Loop
     while (!WindowShouldClose()) {
@@ -64,7 +66,8 @@ int main(int argc, char const *argv[])
         // Rendering Ends
     }
 
-    free(dasher);
+    delete dasher;
+    delete nebula;
     CloseWindow();
     return 0;
 }

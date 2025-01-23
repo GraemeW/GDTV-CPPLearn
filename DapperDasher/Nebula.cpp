@@ -6,8 +6,13 @@
 #include <string>
 #include "Nebula.hpp"
 
-void Nebula::UpdatePosition(float frameTime)
+void Nebula::SetNebulaSpeed(float xVelocity) { this->xVelocity = xVelocity; }
+bool Nebula::IsNebulaOnScreen()
 {
+    return entityPosition.x + entityWidth > 0;
+}
+
+void Nebula::UpdatePosition(float frameTime) {
     entityPosition.x += xVelocity * GetScaledFrameTime(frameTime);
 }
 

@@ -26,7 +26,6 @@ Entity::Entity(string texturePath, int xFrameCount, int yFrameCount, int gameWid
 }
 
 Entity::~Entity() {
-    std::cout << "Butthead";
     UnloadTexture(texture2D);
 }
 

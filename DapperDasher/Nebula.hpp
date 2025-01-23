@@ -16,6 +16,10 @@ private:
     float xVelocity{-10.0};
 
 public:
+    // Methods
+    void SetNebulaSpeed(float xVelocity);
+    bool IsNebulaOnScreen();
+
     // Virtual Methods
     void UpdatePosition(float frameTime) override;
     void UpdateAnimationFrame(float frameTime) override;

@@ -13,6 +13,8 @@ using std::string;
 class Entity
 {
 protected:
+    ~Entity();
+
     // Properties
     const float frameTimeScaler{50.0};
 
@@ -29,7 +31,6 @@ protected:
 
 public:
     Entity(string texturePath, int xFrameCount, int yFrameCount, int gameWidth, int gameHeight, float animationFPS);
-    ~Entity();
 
     // State
     Vector2 entityPosition;
