@@ -22,6 +22,11 @@ int main(int argc, char const *argv[])
     float nebulaSpawnPeriodLimiter{0.5};
     float nebulaSpeed{-25.0};
 
+    // Volatile Background Parameters
+    float backgroundForegroundScrollSpeed{500};
+    float backgroundBuildingsScrollSpeed{200};
+    float backgroundBackingScrollSpeed{50};
+
     /* GAME CODE */
     // Initialization
     InitWindow(gameDimensions[0], gameDimensions[1], gameTitle.c_str());
@@ -35,11 +40,19 @@ int main(int argc, char const *argv[])
     NebulaManager* nebulaManager = new NebulaManager(gameDimensions, animationRate);
     nebulaManager->SetNebulaManagerProperties(maxNebulaCount, nebulaSpawnPeriod, nebulaSpawnPeriodLimiter, nebulaSpeed);
 
+    // Background Properties
+    Background* backgroundBuildings = new Background(BackgroundType::BUILDINGS, backgroundBuildingsScrollSpeed, gameDimensions);
+    Background* backgroundBacking = new Background(BackgroundType::BACKING, backgroundBackingScrollSpeed, gameDimensions);
+    Background* backgroundForeground = new Background(BackgroundType::FOREGROUND, backgroundForegroundScrollSpeed, gameDimensions);
+
     // Main Game Loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         dasher->SetDeltaFrameTime(dt);
         nebulaManager->SetDeltaFrameTime(dt);
+        backgroundBuildings->SetDeltaFrameTime(dt);
+        backgroundBacking->SetDeltaFrameTime(dt);
+        backgroundForeground->SetDeltaFrameTime(dt);
 
         // State Updates
         dasher->SetDasherState();
@@ -55,9 +68,17 @@ int main(int argc, char const *argv[])
         dasher->UpdatePosition();
         nebulaManager->UpdateNebulaPositions();
 
+        backgroundBuildings->AnimateBackground();
+        backgroundBacking->AnimateBackground();
+        backgroundForeground->AnimateBackground();
+
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
+
+        backgroundBacking->DrawBackground();
+        backgroundBuildings->DrawBackground();
+        backgroundForeground->DrawBackground();
 
         dasher->UpdateAnimationFrame();
         dasher->DrawEntity();

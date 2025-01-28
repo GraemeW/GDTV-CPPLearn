@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "Dasher.hpp"
 #include "NebulaManager.hpp"
+#include "Background.hpp"
 
 // ***Tunables***
 // Window + Game Settings
