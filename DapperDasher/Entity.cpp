@@ -25,9 +25,10 @@ Entity::Entity(string texturePath, int xyFrameCount[2], const int gameDimensions
     this->animationFramePeriod = (1.0 / animationFPS);
 }
 
+void Entity::SetDeltaFrameTime(float frameTime){ this->frameTime = frameTime; }
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
-float Entity::GetScaledFrameTime(float frameTime) { return (frameTime * frameTimeScaler); }
+float Entity::GetScaledFrameTime() { return (frameTime * frameTimeScaler); }
 
 void Entity::OverridePosition(int newPosition[2]) {
     entityPosition.x = newPosition[0];

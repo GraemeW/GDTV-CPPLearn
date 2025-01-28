@@ -26,6 +26,7 @@ private:
     float nebulaSpeed{-25.0};
 
     // State
+    float frameTime{0};
     float nebulaSpawnTimer;
     float nebulaSpawnTimeLimit;
 
@@ -39,9 +40,10 @@ public:
     ~NebulaManager();
 
     // Methods
+    void SetDeltaFrameTime(float frameTime);
     void SetNebulaManagerProperties(int maxNebulaCount, Vector2 nebulaSpawnPeriod, float nebulaSpawnPeriodLimiter, float nebulaSpeed);
-    void SpawnNebulas(float frameTime);
-    void UpdateNebulaPositions(float frameTime);
-    void AnimateAndDrawNebulas(float frameTime);
+    void SpawnNebulas();
+    void UpdateNebulaPositions();
+    void AnimateAndDrawNebulas();
 };
 #endif

@@ -32,12 +32,12 @@ public:
     // Methods
     void ClampPosition();
     void ClampVelocity();
-    void IncrementYVelocity(float velocityAdjustment, float frameTime);
-    void IncrementJumpTimer(float frameTime);
-    void ApplyJumpForce(float frameTime);
+    void IncrementYVelocity(float velocityAdjustment);
+    void IncrementJumpTimer();
+    void ApplyJumpForce();
 
     // Virtual Methods
-    void UpdatePosition(float frameTime) override;
-    void UpdateAnimationFrame(float frameTime) override;
+    void UpdatePosition() override;
+    void UpdateAnimationFrame() override;
 };
 #endif

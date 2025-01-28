@@ -25,29 +25,29 @@ void Dasher::ClampVelocity() {
     if (entityPosition.y >= (gameHeight - entityHeight) && yVelocity > 0) { yVelocity = 0; }
 }
 
-void Dasher::IncrementYVelocity(float velocityAdjustment, float frameTime) {
-    yVelocity += velocityAdjustment * GetScaledFrameTime(frameTime);
+void Dasher::IncrementYVelocity(float velocityAdjustment) {
+    yVelocity += velocityAdjustment * GetScaledFrameTime();
 }
 
-void Dasher::IncrementJumpTimer(float frameTime) {
+void Dasher::IncrementJumpTimer() {
     jumpTimer += frameTime;
 }
 
-void Dasher::ApplyJumpForce(float frameTime) {
+void Dasher::ApplyJumpForce() {
     if (!isInAir || jumpTimer < jumpBufferTime) {
         if (isInAir) { yVelocity = 0; }
         else { jumpTimer = 0; }
 
-        this->IncrementYVelocity(-(jumpForce / characterMass), frameTime);
+        this->IncrementYVelocity(-(jumpForce / characterMass));
     }
 }
 
-void Dasher::UpdatePosition(float frameTime) {
-    entityPosition.y += yVelocity * GetScaledFrameTime(frameTime);
+void Dasher::UpdatePosition() {
+    entityPosition.y += yVelocity * GetScaledFrameTime();
     this->ClampPosition();
 }
 
-void Dasher::UpdateAnimationFrame(float frameTime) {
+void Dasher::UpdateAnimationFrame() {
     runningTime += frameTime;
     if (runningTime >= animationFramePeriod) {
         animationFrame++;

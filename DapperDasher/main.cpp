@@ -38,28 +38,30 @@ int main(int argc, char const *argv[])
     // Main Game Loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
+        dasher->SetDeltaFrameTime(dt);
+        nebulaManager->SetDeltaFrameTime(dt);
 
         // State Updates
         dasher->SetDasherState();
-        nebulaManager->SpawnNebulas(dt);
+        nebulaManager->SpawnNebulas();
 
         // Physics Updates
-        dasher->IncrementYVelocity(gravityAcceleration, dt);
-        dasher->IncrementJumpTimer(dt);
+        dasher->IncrementYVelocity(gravityAcceleration);
+        dasher->IncrementJumpTimer();
         if (IsKeyDown(KEY_SPACE)) {
-            dasher->ApplyJumpForce(dt);
+            dasher->ApplyJumpForce();
         }
         dasher->ClampVelocity();
-        dasher->UpdatePosition(dt);
-        nebulaManager->UpdateNebulaPositions(dt);
+        dasher->UpdatePosition();
+        nebulaManager->UpdateNebulaPositions();
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
 
-        dasher->UpdateAnimationFrame(dt);
+        dasher->UpdateAnimationFrame();
         dasher->DrawEntity();
-        nebulaManager->AnimateAndDrawNebulas(dt);
+        nebulaManager->AnimateAndDrawNebulas();
 
         EndDrawing();
         // Rendering Ends

@@ -22,6 +22,15 @@ NebulaManager::~NebulaManager() {
     }
 }
 
+void NebulaManager::SetDeltaFrameTime(float frameTime)
+{
+    this->frameTime = frameTime;
+    for (int i = 0; i < maxNebulaCount; i++) {
+        if (nebulas[i] == nullptr) { continue; }
+        nebulas[i]->SetDeltaFrameTime(frameTime);
+    }
+}
+
 void NebulaManager::SetNebulaManagerProperties(int maxNebulaCount, Vector2 nebulaSpawnPeriod, float nebulaSpawnPeriodLimiter, float nebulaSpeed) {
     this->maxNebulaCount = maxNebulaCount;
     this->nebulaSpawnPeriod = nebulaSpawnPeriod;
@@ -31,7 +40,7 @@ void NebulaManager::SetNebulaManagerProperties(int maxNebulaCount, Vector2 nebul
     nebulas.reserve(maxNebulaCount);
 }
 
-void NebulaManager::SpawnNebulas(float frameTime) {
+void NebulaManager::SpawnNebulas() {
     nebulaSpawnTimer += frameTime;
 
     if (nebulaSpawnTimer > nebulaSpawnTimeLimit) {
@@ -51,10 +60,10 @@ void NebulaManager::SpawnNebulas(float frameTime) {
     }
 }
 
-void NebulaManager::UpdateNebulaPositions(float frameTime) {
+void NebulaManager::UpdateNebulaPositions() {
     for (int i = 0; i < maxNebulaCount; i++) {
         if (nebulas[i] == nullptr) { continue; }
-        nebulas[i]->UpdatePosition(frameTime);
+        nebulas[i]->UpdatePosition();
 
         if (!nebulas[i]->IsNebulaOnScreen()){
             delete nebulas[i];
@@ -63,10 +72,10 @@ void NebulaManager::UpdateNebulaPositions(float frameTime) {
     }
 }
 
-void NebulaManager::AnimateAndDrawNebulas(float frameTime) {
+void NebulaManager::AnimateAndDrawNebulas() {
     for (int i = 0; i < maxNebulaCount; i++) {
         if (nebulas[i] == nullptr) { continue; }
-        nebulas[i]->UpdateAnimationFrame(frameTime);
+        nebulas[i]->UpdateAnimationFrame();
         nebulas[i]->DrawEntity();
     }
 }

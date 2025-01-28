@@ -15,11 +15,11 @@ void Nebula::InitializePosition() {
     this->OverridePosition(newPosition);
 }
 
-void Nebula::UpdatePosition(float frameTime) {
-    entityPosition.x += xVelocity * GetScaledFrameTime(frameTime);
+void Nebula::UpdatePosition() {
+    entityPosition.x += xVelocity * GetScaledFrameTime();
 }
 
-void Nebula::UpdateAnimationFrame(float frameTime)
+void Nebula::UpdateAnimationFrame()
 {
     runningTime += frameTime;
     if (runningTime >= animationFramePeriod) {

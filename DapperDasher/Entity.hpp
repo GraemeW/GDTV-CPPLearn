@@ -26,6 +26,7 @@ protected:
     float animationFramePeriod;
 
     // State
+    float frameTime{0};
     int animationFrame{0};
     float runningTime{0};
 
@@ -38,14 +39,15 @@ public:
     int entityHeight;
 
     // Setters & Getters
+    void SetDeltaFrameTime(float frameTime);
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
-    float GetScaledFrameTime(float frameTime);
+    float GetScaledFrameTime();
 
     // Methods
     void OverridePosition(int newPosition[2]);
-    virtual void UpdatePosition(float frameTime) = 0;
-    virtual void UpdateAnimationFrame(float frameTime) = 0;
+    virtual void UpdatePosition() = 0;
+    virtual void UpdateAnimationFrame() = 0;
     void DrawEntity();
 
 };

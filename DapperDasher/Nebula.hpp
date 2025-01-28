@@ -22,7 +22,7 @@ public:
     bool IsNebulaOnScreen();
 
     // Virtual Methods
-    void UpdatePosition(float frameTime) override;
-    void UpdateAnimationFrame(float frameTime) override;
+    void UpdatePosition() override;
+    void UpdateAnimationFrame() override;
 };
 #endif
