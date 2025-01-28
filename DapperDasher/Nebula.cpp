@@ -11,7 +11,8 @@ bool Nebula::IsNebulaOnScreen() { return entityPosition.x + entityWidth > 0; }
 
 void Nebula::InitializePosition() {
     int yPosition = (gameHeight / 3) + ((double) std::rand() / (RAND_MAX)) * ((2 * gameHeight / 3) - entityHeight);
-    this->OverridePosition(gameWidth, yPosition);
+    int newPosition[2]{gameWidth, yPosition};
+    this->OverridePosition(newPosition);
 }
 
 void Nebula::UpdatePosition(float frameTime) {

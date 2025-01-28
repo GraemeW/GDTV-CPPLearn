@@ -7,13 +7,13 @@
 #include <iostream>
 #include "Entity.hpp"
 
-Entity::Entity(string texturePath, int xFrameCount, int yFrameCount, int gameWidth, int gameHeight, float animationFPS) {
+Entity::Entity(string texturePath, int xyFrameCount[2], const int gameDimensions[2], float animationFPS) {
     texture2D = LoadTexture(texturePath.c_str());
-    this->gameWidth = gameWidth;
-    this->gameHeight = gameHeight;
+    this->gameWidth = gameDimensions[0];
+    this->gameHeight = gameDimensions[1];
     
-    frameRect.width = texture2D.width/xFrameCount;
-    frameRect.height = texture2D.height/yFrameCount;
+    frameRect.width = texture2D.width/xyFrameCount[0];
+    frameRect.height = texture2D.height/xyFrameCount[1];
     frameRect.x = 0;
     frameRect.y = 0;
     
@@ -29,9 +29,9 @@ void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 /
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
 float Entity::GetScaledFrameTime(float frameTime) { return (frameTime * frameTimeScaler); }
 
-void Entity::OverridePosition(float xPosition, float yPosition) {
-    entityPosition.x = xPosition;
-    entityPosition.y = yPosition;
+void Entity::OverridePosition(int newPosition[2]) {
+    entityPosition.x = newPosition[0];
+    entityPosition.y = newPosition[1];
 }
 
 void Entity::DrawEntity() {

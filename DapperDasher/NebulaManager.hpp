@@ -17,8 +17,7 @@ class NebulaManager
 private:
     // Fixed Parameters
     string nebulaTexturePath = "textures/12_nebula_spritesheet.png";
-    int nebulaXFrameCount{8};
-    int nebulaYFrameCount{8};
+    int nebulaxyFrameCount[2]{8, 8};
     
     // Adjustable Parameters -- Override in setter below
     int maxNebulaCount{8};
@@ -31,13 +30,12 @@ private:
     float nebulaSpawnTimeLimit;
 
     // Cached
-    int gameWidth;
-    int gameHeight;
+    int gameDimensions[2];
     float animationRate;
     std::vector<Nebula *> nebulas;
 
 public:
-    NebulaManager(int gameWidth, int gameHeight, float animationRate);
+    NebulaManager(const int gameDimensions[2], float animationRate);
     ~NebulaManager();
 
     // Methods

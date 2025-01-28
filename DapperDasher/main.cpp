@@ -11,8 +11,7 @@ int main(int argc, char const *argv[])
 
     // Volatile Character Parameters
     string dasherTexturePath = "textures/scarfy.png";
-    int dasherXFrameCount = 6;
-    int dasherYFrameCount = 1;
+    int dasherxyFrameCount[2] = {6, 1};
     float jumpForce{80.0};
     float characterMass{0.65};
     float jumpBufferTime{0.25};
@@ -25,15 +24,15 @@ int main(int argc, char const *argv[])
 
     /* GAME CODE */
     // Initialization
-    InitWindow(gameWidth, gameHeight, gameTitle.c_str());
+    InitWindow(gameDimensions[0], gameDimensions[1], gameTitle.c_str());
     SetTargetFPS(targetFPS);
 
     // Character Properties
-    Dasher* dasher = new Dasher(dasherTexturePath, dasherXFrameCount, dasherYFrameCount, gameWidth, gameHeight, animationRate);
+    Dasher* dasher = new Dasher(dasherTexturePath, dasherxyFrameCount, gameDimensions, animationRate);
     dasher->SetDasherProperties(jumpForce, characterMass, jumpBufferTime);
 
     // Nebula Properties
-    NebulaManager* nebulaManager = new NebulaManager(gameWidth, gameHeight, animationRate);
+    NebulaManager* nebulaManager = new NebulaManager(gameDimensions, animationRate);
     nebulaManager->SetNebulaManagerProperties(maxNebulaCount, nebulaSpawnPeriod, nebulaSpawnPeriodLimiter, nebulaSpeed);
 
     // Main Game Loop

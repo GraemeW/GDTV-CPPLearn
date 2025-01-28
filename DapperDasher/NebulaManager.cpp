@@ -7,9 +7,9 @@
 #include <iostream>
 #include "NebulaManager.hpp"
 
-NebulaManager::NebulaManager(int gameWidth, int gameHeight, float animationRate) {
-    this->gameWidth = gameWidth;
-    this->gameHeight = gameHeight;
+NebulaManager::NebulaManager(const int gameDimensions[2], float animationRate) {
+    this->gameDimensions[0] = gameDimensions[0];
+    this->gameDimensions[1] = gameDimensions[1];
     this->animationRate = animationRate;
 
     nebulas.reserve(maxNebulaCount);
@@ -38,7 +38,7 @@ void NebulaManager::SpawnNebulas(float frameTime) {
         for (int i = 0; i < maxNebulaCount; i++) {
             if (nebulas[i] != nullptr) { continue; }
 
-            Nebula* nebula = new Nebula(nebulaTexturePath, nebulaXFrameCount, nebulaYFrameCount, gameWidth, gameHeight, animationRate);
+            Nebula* nebula = new Nebula(nebulaTexturePath, nebulaxyFrameCount, gameDimensions, animationRate);
             nebula->InitializePosition();
             nebula->SetNebulaSpeed(nebulaSpeed);
             nebulas[i] = nebula;
