@@ -43,6 +43,7 @@ public:
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
     float GetScaledFrameTime();
+    Rectangle GetPositionalRect(float pad = 0);
 
     // Methods
     void OverridePosition(int newPosition[2]);

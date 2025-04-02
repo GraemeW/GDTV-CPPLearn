@@ -24,11 +24,13 @@ private:
     Vector2 nebulaSpawnPeriod{0.2, 1.5};
     float nebulaSpawnPeriodLimiter{0.5};
     float nebulaSpeed{-25.0};
+    float nebulaCollisionPadPixels{20};
 
     // State
     float frameTime{0};
     float nebulaSpawnTimer;
     float nebulaSpawnTimeLimit;
+    int totalNebulaCount{0};
 
     // Cached
     int gameDimensions[2];
@@ -42,8 +44,10 @@ public:
     // Methods
     void SetDeltaFrameTime(float frameTime);
     void SetNebulaManagerProperties(int maxNebulaCount, Vector2 nebulaSpawnPeriod, float nebulaSpawnPeriodLimiter, float nebulaSpeed);
+    int GetTotalNebulaCount();
     void SpawnNebulas();
     void UpdateNebulaPositions();
     void AnimateAndDrawNebulas();
+    bool CheckNebulaCollisions(Rectangle dasherRect);
 };
 #endif

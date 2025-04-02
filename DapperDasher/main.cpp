@@ -40,12 +40,16 @@ int main(int argc, char const *argv[])
     NebulaManager* nebulaManager = new NebulaManager(gameDimensions, animationRate);
     nebulaManager->SetNebulaManagerProperties(maxNebulaCount, nebulaSpawnPeriod, nebulaSpawnPeriodLimiter, nebulaSpeed);
 
+    // Finish Line
+    int finishLine{20}; // Nebulae to pass
+
     // Background Properties
     Background* backgroundBuildings = new Background(BackgroundType::BUILDINGS, backgroundBuildingsScrollSpeed, gameDimensions);
     Background* backgroundBacking = new Background(BackgroundType::BACKING, backgroundBackingScrollSpeed, gameDimensions);
     Background* backgroundForeground = new Background(BackgroundType::FOREGROUND, backgroundForegroundScrollSpeed, gameDimensions);
 
     // Main Game Loop
+    bool gameFinished = false;
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         dasher->SetDeltaFrameTime(dt);
@@ -82,8 +86,28 @@ int main(int argc, char const *argv[])
 
         dasher->UpdateAnimationFrame();
         dasher->DrawEntity();
-        nebulaManager->AnimateAndDrawNebulas();
 
+        // Win
+        if (nebulaManager->GetTotalNebulaCount() >= finishLine) {
+            if (!gameFinished) {
+                // TODO:  Add win screen prompt
+            }
+
+            gameFinished = true;
+        }
+
+        // Lose
+        if (nebulaManager->CheckNebulaCollisions(dasher->GetPositionalRect())) {
+            if (!gameFinished) {
+                // TODO:  Add lose screen prompt
+            }
+
+            gameFinished = true;
+        }
+
+        if (!gameFinished) {
+            nebulaManager->AnimateAndDrawNebulas();
+        }
         EndDrawing();
         // Rendering Ends
     }

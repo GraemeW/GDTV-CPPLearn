@@ -30,6 +30,16 @@ void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 /
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
 float Entity::GetScaledFrameTime() { return (frameTime * frameTimeScaler); }
 
+Rectangle Entity::GetPositionalRect(float pad) {
+    Rectangle positionalRect{
+        entityPosition.x + pad,
+        entityPosition.y + pad,
+        frameRect.width - 2*pad,
+        frameRect.height - 2*pad
+    };
+    return positionalRect;
+}
+
 void Entity::OverridePosition(int newPosition[2]) {
     entityPosition.x = newPosition[0];
     entityPosition.y = newPosition[1];

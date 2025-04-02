@@ -13,6 +13,9 @@ NebulaManager::NebulaManager(const int gameDimensions[2], float animationRate) {
     this->animationRate = animationRate;
 
     nebulas.reserve(maxNebulaCount);
+    for (int i = 0; i < maxNebulaCount; i++) {
+        nebulas.push_back(nullptr);
+    }
 }
 
 NebulaManager::~NebulaManager() {
@@ -39,6 +42,8 @@ void NebulaManager::SetNebulaManagerProperties(int maxNebulaCount, Vector2 nebul
 
     nebulas.reserve(maxNebulaCount);
 }
+
+int NebulaManager::GetTotalNebulaCount() { return totalNebulaCount; }
 
 void NebulaManager::SpawnNebulas() {
     nebulaSpawnTimer += frameTime;
@@ -68,6 +73,7 @@ void NebulaManager::UpdateNebulaPositions() {
         if (!nebulas[i]->IsNebulaOnScreen()){
             delete nebulas[i];
             nebulas[i] = nullptr;
+            totalNebulaCount++;
         }
     }
 }
@@ -78,4 +84,16 @@ void NebulaManager::AnimateAndDrawNebulas() {
         nebulas[i]->UpdateAnimationFrame();
         nebulas[i]->DrawEntity();
     }
+}
+
+bool NebulaManager::CheckNebulaCollisions(Rectangle dasherRect) {
+    for (int i = 0; i < maxNebulaCount; i++) {
+        if (nebulas[i] == nullptr) { continue; }
+
+        if (CheckCollisionRecs(dasherRect, nebulas[i]->GetPositionalRect(nebulaCollisionPadPixels))) {
+            std::cout << "Collision detected!" << std::endl;
+            return true;
+        }
+    }
+    return false;
 }
