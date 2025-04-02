@@ -21,8 +21,8 @@ private:
     
     // Adjustable Parameters -- Override in setter below
     int maxNebulaCount{8};
-    Vector2 nebulaSpawnPeriod{0.2, 1.5};
-    float nebulaSpawnPeriodLimiter{0.5};
+    Vector2 nebulaSpawnPeriod{0.5, 2.5};
+    float nebulaSpawnPeriodLimiter{1.0};
     float nebulaSpeed{-25.0};
     float nebulaCollisionPadPixels{20};
 

@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
     nebulaManager->SetNebulaManagerProperties(maxNebulaCount, nebulaSpawnPeriod, nebulaSpawnPeriodLimiter, nebulaSpeed);
 
     // Finish Line
-    int finishLine{20}; // Nebulae to pass
+    int finishLine{10}; // Nebulae to pass
 
     // Background Properties
     Background* backgroundBuildings = new Background(BackgroundType::BUILDINGS, backgroundBuildingsScrollSpeed, gameDimensions);
@@ -50,6 +50,7 @@ int main(int argc, char const *argv[])
 
     // Main Game Loop
     bool gameFinished = false;
+    bool gameResult = false;
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         dasher->SetDeltaFrameTime(dt);
@@ -88,23 +89,22 @@ int main(int argc, char const *argv[])
         dasher->DrawEntity();
 
         // Win
-        if (nebulaManager->GetTotalNebulaCount() >= finishLine) {
-            if (!gameFinished) {
-                // TODO:  Add win screen prompt
-            }
-
+        if (!gameFinished && nebulaManager->GetTotalNebulaCount() >= finishLine) {
             gameFinished = true;
+            gameResult = true;
         }
-
         // Lose
-        if (nebulaManager->CheckNebulaCollisions(dasher->GetPositionalRect())) {
-            if (!gameFinished) {
-                // TODO:  Add lose screen prompt
-            }
-
+        if (!gameFinished && nebulaManager->CheckNebulaCollisions(dasher->GetPositionalRect())) {
             gameFinished = true;
+            gameResult = false;
+        }
+        // Draw Results
+        if (gameFinished) {
+            if (gameResult) { DrawText("You Win!", gameDimensions[0]/2 - 100, gameDimensions[1]/2, 48, GREEN); }
+            else { DrawText("You Lose!", gameDimensions[0]/2 - 100, gameDimensions[1]/2, 48, RED); }
         }
 
+        // Otherwise draw nebulae
         if (!gameFinished) {
             nebulaManager->AnimateAndDrawNebulas();
         }
