@@ -20,11 +20,13 @@ private:
     // State
     float frameTime{0};
     bool isMoving{false};
+    bool isLookingLeft{false};
 
 public:
     // Methods
     void SetDeltaFrameTime(float frameTime){ this->frameTime = frameTime; }
     Vector2 GetPositionShift();
     bool IsMoving();
+    bool IsLookingLeft();
 };
 #endif

@@ -16,7 +16,7 @@ protected:
     virtual ~Entity() {UnloadTexture(currentTexture2D);};
 
     // Tunables
-    float spriteScaler = 2.0;
+    float spriteScaler = 4.0;
 
     // Cached
     Texture2D runTexture2D;
@@ -38,7 +38,6 @@ public:
     Vector2 entityPosition;
     int entityWidth;
     int entityHeight;
-    bool isMoving{false};
 
     // Setters & Getters
     void SetAnimationRate(float animationRate);
@@ -52,6 +51,8 @@ public:
     // Pure Virtual Methods
     virtual void UpdatePosition() = 0;
     virtual void UpdateAnimationFrame() = 0;
+    virtual bool IsMoving() = 0;
+    virtual bool IsLookingLeft() = 0;
 
     // Other Methods
     void DrawEntity(bool forceCentered = false);

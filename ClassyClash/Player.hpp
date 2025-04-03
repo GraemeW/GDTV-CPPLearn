@@ -23,5 +23,7 @@ public:
     void SetDeltaFrameTime(float frameTime) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
+    bool IsMoving() override;
+    bool IsLookingLeft() override;
 };
 #endif

@@ -24,8 +24,6 @@ void Player::SetDeltaFrameTime(float frameTime) {
 void Player::UpdatePosition() {
     Vector2 positionShift = playerMover->GetPositionShift();
     entityPosition = Vector2Add(entityPosition, positionShift);
-
-    isMoving = playerMover->IsMoving();
 }
 
 void Player::UpdateAnimationFrame() {
@@ -38,3 +36,6 @@ void Player::UpdateAnimationFrame() {
         runningTime = 0.0;
     }
 }
+
+bool Player::IsMoving() { return playerMover->IsMoving(); }
+bool Player::IsLookingLeft() { return playerMover->IsLookingLeft(); }

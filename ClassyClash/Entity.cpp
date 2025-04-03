@@ -49,11 +49,15 @@ void Entity::OverridePosition(Vector2 newPosition) {
     entityPosition = newPosition;
 }
 void Entity::DrawEntity(bool forceCentered) {
-    if (isMoving) { currentTexture2D = runTexture2D; }
+    if (this->IsMoving()) { currentTexture2D = runTexture2D; }
     else { currentTexture2D = idleTexture2D; }
 
     Vector2 drawPosition = entityPosition;
     if (forceCentered) { drawPosition = Vector2{gameDimensions.x/2,gameDimensions.y/2}; }
+
+    // Flipping
+    Rectangle frameRectLook{frameRect};
+    if (this->IsLookingLeft()) { frameRectLook.width *= -1; }
 
     // Scaling
     float newWidth = frameRect.width * spriteScaler;
@@ -65,5 +69,5 @@ void Entity::DrawEntity(bool forceCentered) {
         newHeight
     };
 
-    DrawTexturePro(currentTexture2D, frameRect, scaledFrameRect, Vector2{0,0}, 0.0, WHITE);
+    DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{0,0}, 0.0, WHITE);
 }
