@@ -19,8 +19,8 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
     frameRect.x = 0;
     frameRect.y = 0;
     
-    entityPosition.x = gameDimensions.x/2 - frameRect.width/2;
-    entityPosition.y = gameDimensions.y - frameRect.height;
+    worldPosition.x = gameDimensions.x/2 - frameRect.width/2;
+    worldPosition.y = gameDimensions.y - frameRect.height;
     this->entityWidth = frameRect.width;
     this->entityHeight = frameRect.height;
 
@@ -30,11 +30,11 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
-Vector2 Entity::GetPosition() { return entityPosition; }
+Vector2 Entity::GetPosition() { return worldPosition; }
 Rectangle Entity::GetPositionalRect(float pad) {
     Rectangle positionalRect{
-        entityPosition.x + pad,
-        entityPosition.y + pad,
+        worldPosition.x + pad,
+        worldPosition.y + pad,
         frameRect.width - 2*pad,
         frameRect.height - 2*pad
     };
@@ -46,25 +46,23 @@ void Entity::SetDeltaFrameTime(float frameTime){ this->frameTime = frameTime; }
 
 // Other Methods
 void Entity::OverridePosition(Vector2 newPosition) {
-    entityPosition = newPosition;
+    worldPosition = newPosition;
 }
-void Entity::DrawEntity(bool forceCentered) {
+void Entity::DrawEntity() {
     if (this->IsMoving()) { currentTexture2D = runTexture2D; }
     else { currentTexture2D = idleTexture2D; }
-
-    Vector2 drawPosition = entityPosition;
-    if (forceCentered) { drawPosition = Vector2{gameDimensions.x/2,gameDimensions.y/2}; }
 
     // Flipping
     Rectangle frameRectLook{frameRect};
     if (this->IsLookingLeft()) { frameRectLook.width *= -1; }
 
     // Scaling
+    Vector2 screenPosition = GetScreenPosition();
     float newWidth = frameRect.width * spriteScaler;
     float newHeight = frameRect.height * spriteScaler;
     Rectangle scaledFrameRect{
-        drawPosition.x - newWidth / 2,
-        drawPosition.y - newHeight / 2,
+        screenPosition.x - newWidth / 2,
+        screenPosition.y - newHeight / 2,
         newWidth,
         newHeight
     };

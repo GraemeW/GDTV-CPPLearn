@@ -35,7 +35,7 @@ public:
     Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS);
 
     // State
-    Vector2 entityPosition;
+    Vector2 worldPosition;
     int entityWidth;
     int entityHeight;
 
@@ -53,9 +53,10 @@ public:
     virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
+    virtual Vector2 GetScreenPosition(Vector2 offsetPoint = Vector2{}) = 0;
 
     // Other Methods
-    void DrawEntity(bool forceCentered = false);
+    void DrawEntity();
     void OverridePosition(Vector2 newPosition);
 };
 #endif

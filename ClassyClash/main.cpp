@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
         worldMap->DrawWorldMap(player->GetPosition());
 
         player->UpdateAnimationFrame();
-        player->DrawEntity(true);
+        player->DrawEntity();
 
         EndDrawing();
         // Rendering Ends

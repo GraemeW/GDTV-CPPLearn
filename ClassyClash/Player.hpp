@@ -25,5 +25,6 @@ public:
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
     bool IsLookingLeft() override;
+    Vector2 GetScreenPosition(Vector2 offsetPoint) override;
 };
 #endif

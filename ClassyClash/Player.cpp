@@ -23,7 +23,7 @@ void Player::SetDeltaFrameTime(float frameTime) {
 
 void Player::UpdatePosition() {
     Vector2 positionShift = playerMover->GetPositionShift();
-    entityPosition = Vector2Add(entityPosition, positionShift);
+    worldPosition = Vector2Add(worldPosition, positionShift);
 }
 
 void Player::UpdateAnimationFrame() {
@@ -39,3 +39,6 @@ void Player::UpdateAnimationFrame() {
 
 bool Player::IsMoving() { return playerMover->IsMoving(); }
 bool Player::IsLookingLeft() { return playerMover->IsLookingLeft(); }
+Vector2 Player::GetScreenPosition(Vector2 offsetPoint) {
+    return Vector2{gameDimensions.x/2,gameDimensions.y/2};
+}
