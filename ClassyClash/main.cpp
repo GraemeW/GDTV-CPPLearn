@@ -15,25 +15,24 @@ int main(int argc, char const *argv[])
     // Main Game Loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
-        player->SetDeltaFrameTime(dt);
 
-        // Movement
-        player->UpdatePosition();
+        // Physics Updates
+        player->TickPhysics(dt);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
+        worldMap->DrawWorldMap(player->GetWorldPosition());
 
-        worldMap->DrawWorldMap(player->GetPosition());
-
-        player->UpdateAnimationFrame();
-        player->DrawEntity();
+        // Animatiton Updates
+        player->TickAnimation(dt);
 
         EndDrawing();
         // Rendering Ends
     }
 
     delete worldMap;
+    delete player;
     CloseWindow();
     return 0;
 }

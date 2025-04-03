@@ -30,8 +30,8 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
-Vector2 Entity::GetPosition() { return worldPosition; }
-Rectangle Entity::GetPositionalRect(float pad) {
+Vector2 Entity::GetWorldPosition() { return worldPosition; }
+Rectangle Entity::GetWorldPositionRect(float pad) {
     Rectangle positionalRect{
         worldPosition.x + pad,
         worldPosition.y + pad,
@@ -42,7 +42,18 @@ Rectangle Entity::GetPositionalRect(float pad) {
 }
 
 // Default Virtual Methods
-void Entity::SetDeltaFrameTime(float frameTime){ this->frameTime = frameTime; }
+
+void Entity::TickPhysics(float frameTime){ 
+    this->frameTime = frameTime; 
+    SetDependentFrameTime(frameTime);
+    UpdatePosition();
+
+}
+
+void Entity::TickAnimation(float frameTime){
+    UpdateAnimationFrame();
+    DrawEntity();
+}
 
 // Other Methods
 void Entity::OverridePosition(Vector2 newPosition) {

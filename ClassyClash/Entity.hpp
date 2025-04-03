@@ -31,6 +31,15 @@ protected:
     int animationFrame{0};
     float runningTime{0};
 
+    // Methods
+    virtual void SetDependentFrameTime(float frameTime) = 0;
+    virtual void UpdatePosition() = 0;
+    virtual void UpdateAnimationFrame() = 0;
+    virtual bool IsMoving() = 0;
+    virtual bool IsLookingLeft() = 0;
+    virtual Vector2 GetScreenPosition(Vector2 offsetPoint = Vector2{}) = 0;
+    void DrawEntity();
+
 public:
     Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS);
 
@@ -42,21 +51,12 @@ public:
     // Setters & Getters
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
-    Vector2 GetPosition();
-    Rectangle GetPositionalRect(float pad = 0);
+    Vector2 GetWorldPosition();
+    Rectangle GetWorldPositionRect(float pad = 0);
 
-    // Default Virtual Methods
-    virtual void SetDeltaFrameTime(float frameTime);
-
-    // Pure Virtual Methods
-    virtual void UpdatePosition() = 0;
-    virtual void UpdateAnimationFrame() = 0;
-    virtual bool IsMoving() = 0;
-    virtual bool IsLookingLeft() = 0;
-    virtual Vector2 GetScreenPosition(Vector2 offsetPoint = Vector2{}) = 0;
-
-    // Other Methods
-    void DrawEntity();
+    // Methods
+    void TickPhysics(float frameTime);
+    void TickAnimation(float frameTime);
     void OverridePosition(Vector2 newPosition);
 };
 #endif

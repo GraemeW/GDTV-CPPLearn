@@ -16,8 +16,7 @@ Player::~Player() {
     delete playerMover;
 }
 
-void Player::SetDeltaFrameTime(float frameTime) {
-    Entity::SetDeltaFrameTime(frameTime);
+void Player::SetDependentFrameTime(float frameTime) {
     playerMover->SetDeltaFrameTime(frameTime);
 }
 

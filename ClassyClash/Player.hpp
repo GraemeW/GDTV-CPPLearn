@@ -20,7 +20,7 @@ public:
     ~Player();
 
     // Virtual Methods
-    void SetDeltaFrameTime(float frameTime) override;
+    void SetDependentFrameTime(float frameTime) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
