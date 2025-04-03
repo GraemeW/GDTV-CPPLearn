@@ -43,22 +43,21 @@ Rectangle Entity::GetWorldPositionRect(float pad) {
 
 // Default Virtual Methods
 
-void Entity::TickPhysics(float frameTime){ 
-    this->frameTime = frameTime; 
+void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, bool setPlayerPositionToSelf) { 
+    this->frameTime = frameTime;
+    this->playerWorldPosition = playerWorldPosition;
     SetDependentFrameTime(frameTime);
     UpdatePosition();
 
+    if (setPlayerPositionToSelf) { this->playerWorldPosition = worldPosition; }
 }
 
-void Entity::TickAnimation(float frameTime){
+void Entity::TickAnimation() {
     UpdateAnimationFrame();
     DrawEntity();
 }
 
 // Other Methods
-void Entity::OverridePosition(Vector2 newPosition) {
-    worldPosition = newPosition;
-}
 void Entity::DrawEntity() {
     if (this->IsMoving()) { currentTexture2D = runTexture2D; }
     else { currentTexture2D = idleTexture2D; }
@@ -68,7 +67,7 @@ void Entity::DrawEntity() {
     if (this->IsLookingLeft()) { frameRectLook.width *= -1; }
 
     // Scaling
-    Vector2 screenPosition = GetScreenPosition();
+    Vector2 screenPosition = GetScreenPosition(playerWorldPosition);
     float newWidth = frameRect.width * spriteScaler;
     float newHeight = frameRect.height * spriteScaler;
     Rectangle scaledFrameRect{
@@ -79,4 +78,14 @@ void Entity::DrawEntity() {
     };
 
     DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{0,0}, 0.0, WHITE);
+}
+
+void Entity::OverridePosition(Vector2 newPosition) {
+    worldPosition = newPosition;
+}
+
+Vector2 Entity::GetScreenPosition(Vector2 playerWorldPosition) {
+    Vector2 screenCenter = Vector2{gameDimensions.x/2,gameDimensions.y/2};
+    Vector2 offset = Vector2Subtract(worldPosition, playerWorldPosition);
+    return Vector2Add(screenCenter, offset);
 }

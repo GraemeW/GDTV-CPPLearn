@@ -38,6 +38,3 @@ void Player::UpdateAnimationFrame() {
 
 bool Player::IsMoving() { return playerMover->IsMoving(); }
 bool Player::IsLookingLeft() { return playerMover->IsLookingLeft(); }
-Vector2 Player::GetScreenPosition(Vector2 offsetPoint) {
-    return Vector2{gameDimensions.x/2,gameDimensions.y/2};
-}

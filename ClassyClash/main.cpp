@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
         float dt = GetFrameTime();
 
         // Physics Updates
-        player->TickPhysics(dt);
+        player->TickPhysics(dt, player->GetWorldPosition(), true);
 
         // Rendering
         BeginDrawing();
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
         worldMap->DrawWorldMap(player->GetWorldPosition());
 
         // Animatiton Updates
-        player->TickAnimation(dt);
+        player->TickAnimation();
 
         EndDrawing();
         // Rendering Ends

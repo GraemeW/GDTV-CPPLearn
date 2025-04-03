@@ -7,6 +7,7 @@
 using std::string;
 #include <string>
 #include "raylib.h"
+#include "raymath.h"
 
 #ifndef Entity_h
 #define Entity_h
@@ -30,6 +31,7 @@ protected:
     float frameTime{0};
     int animationFrame{0};
     float runningTime{0};
+    Vector2 playerWorldPosition{0,0};
 
     // Methods
     virtual void SetDependentFrameTime(float frameTime) = 0;
@@ -37,7 +39,6 @@ protected:
     virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
-    virtual Vector2 GetScreenPosition(Vector2 offsetPoint = Vector2{}) = 0;
     void DrawEntity();
 
 public:
@@ -55,8 +56,9 @@ public:
     Rectangle GetWorldPositionRect(float pad = 0);
 
     // Methods
-    void TickPhysics(float frameTime);
-    void TickAnimation(float frameTime);
+    void TickPhysics(float frameTime, Vector2 playerWorldPosition, bool setPlayerPositionToSelf = false);
+    void TickAnimation();
     void OverridePosition(Vector2 newPosition);
+    Vector2 GetScreenPosition(Vector2 playerWorldPosition);
 };
 #endif
