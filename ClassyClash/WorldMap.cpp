@@ -14,3 +14,9 @@ void WorldMap::DrawWorldMap(Vector2 mapPosition) {
     this->mapPosition = mapPosition;
     DrawTextureEx(texture2D, mapPosition, 0.0, mapScaler, WHITE);
 }
+
+void WorldMap::DrawWorldMapShift(Vector2 shiftAmount)
+{
+    Vector2 newMapPosition = Vector2Add(this->mapPosition, shiftAmount);
+    DrawWorldMap(newMapPosition);
+}

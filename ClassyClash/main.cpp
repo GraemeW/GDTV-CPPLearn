@@ -6,18 +6,28 @@ int main(int argc, char const *argv[])
 {
     /* GAME CODE */
     // Initialization
-    InitWindow(gameDimensions[0], gameDimensions[1], gameTitle.c_str());
+    InitWindow(gameDimensions.x, gameDimensions.y, gameTitle.c_str());
     SetTargetFPS(targetFPS);
     WorldMap* worldMap = new WorldMap();
+    Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, gameDimensions, animationRate);
+    player->OverridePosition(startingPosition);
 
     // Main Game Loop
     while (!WindowShouldClose()) {
+        float dt = GetFrameTime();
+        player->SetDeltaFrameTime(dt);
 
+        // Movement
+        player->UpdatePosition();
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
-        worldMap->DrawWorldMap(startingPosition);
+
+        worldMap->DrawWorldMap(player->GetPosition());
+
+        player->UpdateAnimationFrame();
+        player->DrawEntity(true);
 
         EndDrawing();
         // Rendering Ends

@@ -7,6 +7,7 @@
 using std::string;
 #include <string>
 #include "raylib.h"
+#include "raymath.h"
 
 #ifndef WorldMap_h
 #define WorldMap_h
@@ -28,5 +29,6 @@ public:
     ~WorldMap() {UnloadTexture(texture2D);};
 
     void DrawWorldMap(Vector2 mapPosition);
+    void DrawWorldMapShift(Vector2 shiftAmount);
 };
 #endif
