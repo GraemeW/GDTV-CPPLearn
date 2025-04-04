@@ -19,8 +19,7 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
     frameRect.x = 0;
     frameRect.y = 0;
     
-    worldPosition.x = gameDimensions.x/2 - frameRect.width/2;
-    worldPosition.y = gameDimensions.y - frameRect.height;
+    worldPosition = Vector2{};
     this->entityWidth = frameRect.width;
     this->entityHeight = frameRect.height;
 
@@ -29,8 +28,11 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
 
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
+
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
+
 Vector2 Entity::GetWorldPosition() { return worldPosition; }
+
 Rectangle Entity::GetWorldPositionRect(float pad) {
     Rectangle positionalRect{
         worldPosition.x + pad,

@@ -16,7 +16,7 @@ const int targetFPS{60};
 float animationRate{12.0}; // fps
 
 // Position
-Vector2 startingPosition{-512, -512};
+Vector2 startingPosition{512, 512};
 
 // Textures
 string knightTexturePathActive = "characters/knight_run_spritesheet.png";

@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
-        worldMap->DrawWorldMap(player->GetWorldPosition());
+        worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0));
 
         // Animatiton Updates
         player->TickAnimation();
