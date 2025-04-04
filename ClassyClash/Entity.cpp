@@ -45,11 +45,12 @@ Rectangle Entity::GetWorldPositionRect(float pad) {
 
 // Default Virtual Methods
 
-void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, bool setPlayerPositionToSelf) { 
+void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, bool setPlayerPositionToSelf) { 
     this->frameTime = frameTime;
     this->playerWorldPosition = playerWorldPosition;
     SetDependentFrameTime(frameTime);
     UpdatePosition();
+    ClampPosition(mapBounds);
 
     if (setPlayerPositionToSelf) { this->playerWorldPosition = worldPosition; }
 }
@@ -60,6 +61,15 @@ void Entity::TickAnimation() {
 }
 
 // Other Methods
+void Entity::ClampPosition(Vector4 bounds)
+{
+    // Bounds follow:  W/S/N/E
+    if (worldPosition.x < bounds.x) { worldPosition.x = bounds.x; }
+    if (worldPosition.y > bounds.y) { worldPosition.y = bounds.y; }
+    if (worldPosition.y < bounds.z) { worldPosition.y = bounds.z; }
+    if (worldPosition.x > bounds.w) { worldPosition.x = bounds.w; }
+}
+
 void Entity::DrawEntity() {
     if (this->IsMoving()) { currentTexture2D = runTexture2D; }
     else { currentTexture2D = idleTexture2D; }

@@ -17,12 +17,12 @@ int main(int argc, char const *argv[])
         float dt = GetFrameTime();
 
         // Physics Updates
-        player->TickPhysics(dt, player->GetWorldPosition(), true);
+        player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), true);
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
-        worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0));
+        worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
 
         // Animatiton Updates
         player->TickAnimation();

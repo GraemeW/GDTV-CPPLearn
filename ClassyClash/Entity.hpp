@@ -39,6 +39,7 @@ protected:
     virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
+    void ClampPosition(Vector4 bounds);
     void DrawEntity();
 
 public:
@@ -56,7 +57,7 @@ public:
     Rectangle GetWorldPositionRect(float pad = 0);
 
     // Methods
-    void TickPhysics(float frameTime, Vector2 playerWorldPosition, bool setPlayerPositionToSelf = false);
+    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, bool setPlayerPositionToSelf = false);
     void TickAnimation();
     void OverridePosition(Vector2 newPosition);
     Vector2 GetScreenPosition(Vector2 playerWorldPosition);

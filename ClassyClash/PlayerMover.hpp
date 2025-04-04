@@ -15,7 +15,7 @@ class PlayerMover
 {
 private:
     // Tunables
-    float speed{100.0};
+    float speed{350.0};
 
     // State
     float frameTime{0};
