@@ -1,20 +1,19 @@
 //
-// Player.h
+// Prop.h
 // ClassyClash
 //
 
 #pragma once
+using std::string;
+#include <string>
+#include "raylib.h"
+#include "raymath.h"
 #include "Entity.hpp"
-#include "PlayerMover.hpp"
 
-#ifndef Player_h
-#define Player_h
-class Player : public Entity
+#ifndef Prop_h
+#define Prop_h
+class Prop : public Entity
 {
-private:
-    // Cached References
-    PlayerMover* playerMover;
-
 protected:
     // Virtual Methods
     void SetDependentFrameTime(float frameTime) override;
@@ -24,7 +23,6 @@ protected:
     bool IsLookingLeft() override;
 
 public:
-    Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS);
-    ~Player();
+    Prop(string texturePath, Vector2 gameDimensions, Vector2 worldPosition);
 };
 #endif

@@ -14,7 +14,7 @@ using std::string;
 class Entity
 {
 protected:
-    virtual ~Entity() {UnloadTexture(currentTexture2D);};
+    virtual ~Entity();
 
     // Tunables
     float spriteScaler = 4.0;

@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
 #include "raylib.h"
 #include "raymath.h"
 #include "WorldMap.hpp"
+#include "PropManager.hpp"
 #include "Player.hpp"
 
 // ***Tunables***
@@ -15,10 +17,11 @@ const Color backgroundColor{WHITE};
 const int targetFPS{60};
 float animationRate{12.0}; // fps
 
-// Position
-Vector2 startingPosition{512, 512};
-
-// Textures
+// Textures & Positions
+// Player
 string knightTexturePathActive = "characters/knight_run_spritesheet.png";
 string knightTexturePathIdle = "characters/knight_idle_spritesheet.png";
 int knightxyFrameCount[2] = {6, 1};
+Vector2 startingPosition{512.0, 512.0};
+
+

@@ -9,6 +9,7 @@ int main(int argc, char const *argv[])
     InitWindow(gameDimensions.x, gameDimensions.y, gameTitle.c_str());
     SetTargetFPS(targetFPS);
     WorldMap* worldMap = new WorldMap(gameDimensions);
+    PropManager* propManager = new PropManager(gameDimensions);
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 
@@ -18,11 +19,13 @@ int main(int argc, char const *argv[])
 
         // Physics Updates
         player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), true);
+        propManager->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds());
 
         // Rendering
         BeginDrawing();
         ClearBackground(backgroundColor);
         worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
+        propManager->TickAnimation();
 
         // Animatiton Updates
         player->TickAnimation();

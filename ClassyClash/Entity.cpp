@@ -26,6 +26,11 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
     this->animationFramePeriod = (1.0 / animationFPS);
 }
 
+Entity::~Entity() {
+    if (IsTextureValid(runTexture2D)) { UnloadTexture(runTexture2D); }
+    if (IsTextureValid(idleTexture2D)) { UnloadTexture(idleTexture2D); }
+}
+
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 
