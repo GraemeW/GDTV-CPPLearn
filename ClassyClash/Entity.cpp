@@ -75,6 +75,11 @@ void Entity::ClampPosition(Vector4 bounds)
 }
 
 void Entity::DrawEntity() {
+    // Early return if no reason to render
+    Vector2 deltaPosition = Vector2Subtract(worldPosition, playerWorldPosition);
+    if (abs(deltaPosition.x) > (gameDimensions.x || abs(deltaPosition.y) > gameDimensions.y)) { return; }
+    
+    // Texture Swaps
     if (this->IsMoving()) { currentTexture2D = runTexture2D; }
     else { currentTexture2D = idleTexture2D; }
 
