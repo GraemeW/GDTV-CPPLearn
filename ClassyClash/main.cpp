@@ -8,7 +8,7 @@ int main(int argc, char const *argv[])
     // Initialization
     InitWindow(gameDimensions.x, gameDimensions.y, gameTitle.c_str());
     SetTargetFPS(targetFPS);
-    WorldMap* worldMap = new WorldMap();
+    WorldMap* worldMap = new WorldMap(gameDimensions);
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 

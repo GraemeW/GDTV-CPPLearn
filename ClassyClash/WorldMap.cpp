@@ -6,12 +6,14 @@
 #include <string>
 #include "WorldMap.hpp"
 
-WorldMap::WorldMap() {
+WorldMap::WorldMap(Vector2 gameDimensions) {
+    this->gameDimensions = gameDimensions;
+
     texture2D = LoadTexture(worldMapPath.c_str());
-    mapBounds.x = boundOffsets.x * mapScaler;
-    mapBounds.y = (texture2D.height - boundOffsets.y) * mapScaler;
-    mapBounds.z = boundOffsets.z * mapScaler;
-    mapBounds.w = (texture2D.width - boundOffsets.w) * mapScaler;
+    mapBounds.x = boundOffsets.x;
+    mapBounds.y = texture2D.height * mapScaler - gameDimensions.y - boundOffsets.y;
+    mapBounds.z = boundOffsets.z;
+    mapBounds.w = texture2D.width * mapScaler - gameDimensions.x - boundOffsets.w;
 }
 
 void WorldMap::DrawWorldMap(Vector2 mapPosition) {
