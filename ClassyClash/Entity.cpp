@@ -7,12 +7,13 @@
 #include <iostream>
 #include "Entity.hpp"
 
-Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS) {
+Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS)
+: gameDimensions(gameDimensions), animationFramePeriod(1.0 / animationFPS) {
+    
     runTexture2D = LoadTexture(runTexturePath.c_str());
     idleTexture2D = LoadTexture(idleTexturePath.c_str());
     
     currentTexture2D = idleTexture2D;
-    this->gameDimensions = gameDimensions;
     
     frameRect.width = currentTexture2D.width/xyFrameCount[0];
     frameRect.height = currentTexture2D.height/xyFrameCount[1];
@@ -22,8 +23,6 @@ Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2
     worldPosition = Vector2{};
     this->entityWidth = frameRect.width;
     this->entityHeight = frameRect.height;
-
-    this->animationFramePeriod = (1.0 / animationFPS);
 }
 
 Entity::~Entity() {

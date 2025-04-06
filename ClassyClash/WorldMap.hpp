@@ -21,7 +21,6 @@ private:
 
     // Cached
     Texture2D texture2D;
-    Vector2 gameDimensions{};
 
     // State
     Vector2 mapPosition{0,0};

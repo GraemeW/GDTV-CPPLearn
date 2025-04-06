@@ -7,8 +7,7 @@
 #include "WorldMap.hpp"
 
 WorldMap::WorldMap(Vector2 gameDimensions) {
-    this->gameDimensions = gameDimensions;
-
+    
     texture2D = LoadTexture(worldMapPath.c_str());
     mapBounds.x = boundOffsets.x;
     mapBounds.y = texture2D.height * mapScaler - gameDimensions.y - boundOffsets.y;
