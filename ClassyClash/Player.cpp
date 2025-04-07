@@ -7,8 +7,8 @@
 #include "Player.hpp"
 
 // Methods
-Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS) 
-: Entity(runTexturePath, idleTexturePath, xyFrameCount, gameDimensions, animationFPS) {
+Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS) 
+: Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     playerMover = new PlayerMover();
 }
 
@@ -20,9 +20,18 @@ void Player::SetDependentFrameTime(float frameTime) {
     playerMover->SetDeltaFrameTime(frameTime);
 }
 
-void Player::UpdatePosition() {
+void Player::UpdatePosition(std::vector<Rectangle> colliders) {
+    Vector2 oldWorldPosition = Vector2(worldPosition);
+
     Vector2 positionShift = playerMover->GetPositionShift();
     worldPosition = Vector2Add(worldPosition, positionShift);
+
+    for (Rectangle collider : colliders) {
+        if (CheckCollisionRecs(this->GetCollider(), collider)) { 
+            worldPosition = oldWorldPosition;
+            return; // early exit, cannot move
+        }
+    }
 }
 
 void Player::UpdateAnimationFrame() {

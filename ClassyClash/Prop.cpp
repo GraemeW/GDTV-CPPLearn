@@ -7,14 +7,14 @@
 #include <iostream>
 #include "Prop.hpp"
 
-Prop::Prop(string texturePath, Vector2 gameDimensions, Vector2 worldPosition) 
-: Entity(texturePath, texturePath, (int[]){1,1}, gameDimensions, 1.0) {
+Prop::Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 worldPosition) 
+: Entity(texturePath, texturePath, (int[]){1,1}, padding, gameDimensions, 1.0) {
     this->worldPosition = worldPosition;
 }
 
 // Unused for prop (unless we add prop animations in future)
 void Prop::SetDependentFrameTime(float frameTime) { }
-void Prop::UpdatePosition() { }
+void Prop::UpdatePosition(std::vector<Rectangle> colliders) { }
 void Prop::UpdateAnimationFrame() { }
 
 // Simple Overrides -- No look, move for props

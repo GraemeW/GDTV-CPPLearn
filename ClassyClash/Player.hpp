@@ -18,13 +18,13 @@ private:
 protected:
     // Virtual Methods
     void SetDependentFrameTime(float frameTime) override;
-    void UpdatePosition() override;
+    void UpdatePosition(std::vector<Rectangle> colliders) override;
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
     bool IsLookingLeft() override;
 
 public:
-    Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], Vector2 gameDimensions, float animationFPS);
+    Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
     ~Player();
 };
 #endif

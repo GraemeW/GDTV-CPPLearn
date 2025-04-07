@@ -9,3 +9,5 @@ Prop
 main
 Entity
 WorldMap
+Player
+PropManager
