@@ -7,9 +7,11 @@
 #include "Enemy.hpp"
 
 // Methods
-Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition) 
+Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq)
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     this->worldPosition = worldPosition;
+    this->speed = speed;
+    this->aggroRadiusSq = aggroRadiusSq;
 }
 
 void Enemy::SetDependentFrameTime(float frameTime) { this->frameTime = frameTime; }

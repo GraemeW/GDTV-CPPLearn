@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 
-    Enemy* enemy = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, goblinStartingPosition);
+    Enemy* enemy = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, goblinStartingPosition, goblinSpeed, goblinAggroRadiusSq);
 
     std::vector<Entity *> entities = propManager->GetProps();
     entities.push_back(enemy);

@@ -32,3 +32,5 @@ string goblinTexturePathIdle = "characters/goblin_idle_spritesheet.png";
 int goblinxyFrameCount[2] = {6, 1};
 float goblinPadding{0.0};
 Vector2 goblinStartingPosition{800.0, 800.0};
+float goblinSpeed{200.0};
+float goblinAggroRadiusSq{40000};
