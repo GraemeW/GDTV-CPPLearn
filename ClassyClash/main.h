@@ -7,6 +7,7 @@
 #include "WorldMap.hpp"
 #include "PropManager.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 
 // ***Tunables***
 // Window + Game Settings
@@ -25,4 +26,9 @@ int knightxyFrameCount[2] = {6, 1};
 float knightPadding{0.0};
 Vector2 startingPosition{350.0, 350.0};
 
-
+// Temp Enemy
+string goblinTexturePathActive = "characters/goblin_run_spritesheet.png";
+string goblinTexturePathIdle = "characters/goblin_idle_spritesheet.png";
+int goblinxyFrameCount[2] = {6, 1};
+float goblinPadding{0.0};
+Vector2 goblinStartingPosition{800.0, 800.0};

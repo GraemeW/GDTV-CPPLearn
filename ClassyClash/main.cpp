@@ -13,14 +13,20 @@ int main(int argc, char const *argv[])
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 
+    Enemy* enemy = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, goblinStartingPosition);
+
+    std::vector<Entity *> entities = propManager->GetProps();
+    entities.push_back(enemy);
+    entities.push_back(player);
+
     // Main Game Loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
 
         // Physics Updates
-        std::vector<Entity *> props = propManager->GetProps();
-        player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), props, true);
+        player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), entities, true);
         propManager->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds());
+        enemy->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), entities, false);
 
         // Rendering
         BeginDrawing();
@@ -29,6 +35,7 @@ int main(int argc, char const *argv[])
         worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
         propManager->TickAnimation();
         player->TickAnimation(true);
+        enemy->TickAnimation(false);
 
         EndDrawing();
         // Rendering Ends

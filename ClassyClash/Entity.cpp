@@ -4,7 +4,6 @@
 //
 
 #include <string>
-#include <iostream>
 #include "Entity.hpp"
 
 Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS)
