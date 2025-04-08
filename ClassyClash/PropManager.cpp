@@ -13,6 +13,21 @@ PropManager::PropManager(Vector2 gameDimensions) {
         Prop* prop = new Prop(bushTexturePath, bushPadding, gameDimensions, bushCoordinate);
         props.push_back(prop);
     }
+    // Logs
+    for (Vector2 logCoordinate : logCoordinates) {
+        Prop* prop = new Prop(logTexturePath, logPadding, gameDimensions, logCoordinate);
+        props.push_back(prop);
+    }
+    // Rocks
+    for (Vector2 rockCoordinate : rockCoordinates) {
+        Prop* prop = new Prop(rockTexturePath, rockPadding, gameDimensions, rockCoordinate);
+        props.push_back(prop);
+    }
+    // Signs
+    for (Vector2 signCoordinate : signCoordinates) {
+        Prop* prop = new Prop(signTexturePath, signPadding, gameDimensions, signCoordinate);
+        props.push_back(prop);
+    }
 }
 
 PropManager::~PropManager() {
