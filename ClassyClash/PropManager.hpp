@@ -40,6 +40,6 @@ public:
     ~PropManager();
     void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds);
     void TickAnimation();
-    std::vector<Rectangle> GetColliders();
+    std::vector<Entity *> GetProps();
 };
 #endif

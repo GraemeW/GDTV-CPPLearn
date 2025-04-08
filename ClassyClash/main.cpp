@@ -18,8 +18,8 @@ int main(int argc, char const *argv[])
         float dt = GetFrameTime();
 
         // Physics Updates
-        std::vector<Rectangle> propColliders = propManager->GetColliders();
-        player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), propColliders, true);
+        std::vector<Entity *> props = propManager->GetProps();
+        player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), props, true);
         propManager->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds());
 
         // Rendering

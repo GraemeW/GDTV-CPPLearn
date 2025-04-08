@@ -50,12 +50,12 @@ Rectangle Entity::GetCollider() {
 }
 
 // Default Virtual Methods
-void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Rectangle> colliders, bool isPlayer) { 
+void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) { 
     this->frameTime = frameTime;
     this->playerWorldPosition = playerWorldPosition;
     SetDependentFrameTime(frameTime);
     
-    UpdatePosition(colliders);
+    UpdatePosition(entities);
     ClampPosition(mapBounds);
     if (isPlayer) { this->playerWorldPosition = worldPosition; }
 }

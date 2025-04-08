@@ -41,8 +41,8 @@ void PropManager::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vect
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }
 
-        std::vector<Rectangle> colliders; // Empty vector, props don't move and thus cannot collide
-        prop->TickPhysics(frameTime, playerWorldPosition, mapBounds, colliders, false);
+        std::vector<Entity *> entities; // Empty vector, props don't move and thus cannot collide
+        prop->TickPhysics(frameTime, playerWorldPosition, mapBounds, entities, false);
     }
 }
 
@@ -53,11 +53,13 @@ void PropManager::TickAnimation() {
     }
 }
 
-std::vector<Rectangle> PropManager::GetColliders() {
-    std::vector<Rectangle> colliders;
+std::vector<Entity *> PropManager::GetProps() { 
+    std::vector<Entity *> entities;
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }
-        colliders.push_back(prop->GetCollider());
+        Entity* entity = prop;
+        entities.push_back(entity);
     }
-    return colliders;
+
+    return entities; 
 }

@@ -18,7 +18,7 @@ private:
 protected:
     // Virtual Methods
     void SetDependentFrameTime(float frameTime) override;
-    void UpdatePosition(std::vector<Rectangle> colliders) override;
+    void UpdatePosition(std::vector<Entity *> entities) override;
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
     bool IsLookingLeft() override;

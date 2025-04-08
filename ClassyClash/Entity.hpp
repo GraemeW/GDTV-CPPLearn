@@ -40,7 +40,7 @@ protected:
 
     // Methods
     virtual void SetDependentFrameTime(float frameTime) = 0;
-    virtual void UpdatePosition(std::vector<Rectangle> colliders) = 0;
+    virtual void UpdatePosition(std::vector<Entity *> otherEntities) = 0;
     virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
@@ -57,7 +57,7 @@ public:
     Rectangle GetCollider();
 
     // Methods
-    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Rectangle> colliders, bool isPlayer = false);
+    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
     void TickAnimation(bool isPlayer = false);
     void OverridePosition(Vector2 newPosition);
     Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);

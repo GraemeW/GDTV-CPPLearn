@@ -14,7 +14,7 @@ Prop::Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 wo
 
 // Unused for prop (unless we add prop animations in future)
 void Prop::SetDependentFrameTime(float frameTime) { }
-void Prop::UpdatePosition(std::vector<Rectangle> colliders) { }
+void Prop::UpdatePosition(std::vector<Entity *> entities) { }
 void Prop::UpdateAnimationFrame() { }
 
 // Simple Overrides -- No look, move for props

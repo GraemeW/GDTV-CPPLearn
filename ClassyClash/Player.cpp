@@ -20,14 +20,16 @@ void Player::SetDependentFrameTime(float frameTime) {
     playerMover->SetDeltaFrameTime(frameTime);
 }
 
-void Player::UpdatePosition(std::vector<Rectangle> colliders) {
+void Player::UpdatePosition(std::vector<Entity *> entities) {
     Vector2 oldWorldPosition = Vector2(worldPosition);
 
     Vector2 positionShift = playerMover->GetPositionShift();
     worldPosition = Vector2Add(worldPosition, positionShift);
 
-    for (Rectangle collider : colliders) {
-        if (CheckCollisionRecs(this->GetCollider(), collider)) { 
+    for (Entity* entity : entities) {
+        if (entity == this) { continue; } // Do not collide with self
+
+        if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) { 
             worldPosition = oldWorldPosition;
             return; // early exit, cannot move
         }
