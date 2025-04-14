@@ -60,6 +60,5 @@ std::vector<Entity *> PropManager::GetProps() {
         Entity* entity = prop;
         entities.push_back(entity);
     }
-
     return entities; 
 }

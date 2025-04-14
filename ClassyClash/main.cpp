@@ -10,14 +10,14 @@ int main(int argc, char const *argv[])
     SetTargetFPS(targetFPS);
     WorldMap* worldMap = new WorldMap(gameDimensions);
     PropManager* propManager = new PropManager(gameDimensions);
+    EnemyManager* enemyManager = new EnemyManager(gameDimensions, animationRate);
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 
-    Enemy* enemy = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, goblinStartingPosition, goblinSpeed, goblinAggroRadiusSq);
-
-    std::vector<Entity *> entities = propManager->GetProps();
-    entities.push_back(enemy);
+    std::vector<Entity *> entities;
     entities.push_back(player);
+    for (Entity* prop : propManager->GetProps()) { entities.push_back(prop); }
+    for (Entity* enemy : enemyManager->GetEnemies()) { entities.push_back(enemy); }
 
     // Main Game Loop
     while (!WindowShouldClose()) {
@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
         // Physics Updates
         player->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), entities, true);
         propManager->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds());
-        enemy->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), entities, false);
+        enemyManager->TickPhysics(dt, player->GetWorldPosition(), worldMap->GetMapBounds(), entities);
 
         // Rendering
         BeginDrawing();
@@ -35,13 +35,15 @@ int main(int argc, char const *argv[])
         worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
         propManager->TickAnimation();
         player->TickAnimation(true);
-        enemy->TickAnimation(false);
+        enemyManager->TickAnimation();
 
         EndDrawing();
         // Rendering Ends
     }
 
     delete worldMap;
+    delete propManager;
+    delete enemyManager;
     delete player;
     CloseWindow();
     return 0;
