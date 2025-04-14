@@ -7,26 +7,24 @@
 #include <iostream>
 #include "EnemyManager.hpp"
 
-EnemyManager::EnemyManager(Vector2 gameDimensions, float animationRate) {
-    // Goblins
-    for (Vector2 goblinCoordinate : goblinCoordinates) {
-        Enemy* enemy = SpawnEnemy(EnemyType::Goblin, goblinCoordinate, gameDimensions, animationRate);
-        if (enemy == nullptr) { break; }
-        enemies.push_back(enemy);
-    }
-
-    // Slimes
-    for (Vector2 slimeCoordinate : slimeCoordinates) {
-        Enemy* enemy = SpawnEnemy(EnemyType::Slime, slimeCoordinate, gameDimensions, animationRate);
-        if (enemy == nullptr) { break; }
-        enemies.push_back(enemy);
-    }
+EnemyManager::EnemyManager(Vector2 gameDimensions, float animationRate) 
+: gameDimensions(gameDimensions), animationRate(animationRate) {
+    SpawnEnemies(EnemyType::Goblin, goblinCoordinates);
+    SpawnEnemies(EnemyType::Slime, slimeCoordinates);
 }
 
 EnemyManager::~EnemyManager() {
     for (Enemy* enemy : enemies) {
         if (enemy == nullptr) { continue; }
         delete enemy;
+    }
+}
+
+void EnemyManager::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
+    for (Vector2 enemyCoordinate : enemyCoordinates) {
+        Enemy* enemy = SpawnEnemy(enemyType, enemyCoordinate, gameDimensions, animationRate);
+        if (enemy == nullptr) { break; }
+        enemies.push_back(enemy);
     }
 }
 

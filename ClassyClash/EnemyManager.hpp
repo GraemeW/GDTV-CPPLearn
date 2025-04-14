@@ -32,10 +32,15 @@ private:
     std::vector<Vector2> slimeCoordinates {Vector2{950.0, 2150.0}};
     float slimePadding{0.0};
 
+    // Cached References
+    Vector2 gameDimensions{};
+    float animationRate{};
+
     // State
     std::vector<Enemy *> enemies;
 
     // Methods
+    void SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates);
     Enemy* SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate);
 
 public:
