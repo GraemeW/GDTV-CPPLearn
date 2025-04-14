@@ -27,14 +27,9 @@ void Enemy::UpdatePosition(std::vector<Entity *> entities) {
     Vector2 positionShift = Vector2Scale(Vector2Normalize(playerDirection), speed * frameTime);
     worldPosition = Vector2Add(worldPosition, positionShift);
     
-    for (Entity* entity : entities) {
-        if (entity == this) { continue; } // Do not collide with self
-
-        if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) { 
-            worldPosition = oldWorldPosition;
-            return; // early exit, cannot move
-        }
-    }    
+    if (CheckCollisions(entities)) {
+        worldPosition = oldWorldPosition;
+    }
 }
 
 void Enemy::UpdateAnimationFrame() {

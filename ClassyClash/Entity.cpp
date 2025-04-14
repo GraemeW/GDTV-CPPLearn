@@ -48,9 +48,8 @@ Rectangle Entity::GetCollider() {
     return positionalRect;
 }
 
-// Default Virtual Methods
+// Default Methods
 void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) { 
-    this->frameTime = frameTime;
     this->playerWorldPosition = playerWorldPosition;
     SetDependentFrameTime(frameTime);
     
@@ -64,13 +63,20 @@ void Entity::TickAnimation(bool isPlayer) {
     DrawEntity(isPlayer);
 }
 
-// Other Methods
 void Entity::ClampPosition(Vector4 bounds) {
     // Bounds follow:  W/S/N/E
     if (worldPosition.x < bounds.x) { worldPosition.x = bounds.x; }
     if (worldPosition.y > bounds.y) { worldPosition.y = bounds.y; }
     if (worldPosition.y < bounds.z) { worldPosition.y = bounds.z; }
     if (worldPosition.x > bounds.w) { worldPosition.x = bounds.w; }
+}
+
+bool Entity::CheckCollisions(std::vector<Entity *> entities) {
+    for (Entity* entity : entities) {
+        if (entity == this) { continue; } // Do not collide with self
+        if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) {  return true; }
+    }
+    return false;
 }
 
 void Entity::DrawEntity(bool isPlayer) {

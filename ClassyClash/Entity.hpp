@@ -44,7 +44,9 @@ protected:
     virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
+    // Default 
     void ClampPosition(Vector4 bounds);
+    bool CheckCollisions(std::vector<Entity *> entities);
     void DrawEntity(bool isPlayer = false);
 
 public:

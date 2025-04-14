@@ -17,6 +17,7 @@ Player::~Player() {
 }
 
 void Player::SetDependentFrameTime(float frameTime) {
+    this->frameTime = frameTime;
     playerMover->SetDeltaFrameTime(frameTime);
 }
 
@@ -26,13 +27,8 @@ void Player::UpdatePosition(std::vector<Entity *> entities) {
     Vector2 positionShift = playerMover->GetPositionShift();
     worldPosition = Vector2Add(worldPosition, positionShift);
 
-    for (Entity* entity : entities) {
-        if (entity == this) { continue; } // Do not collide with self
-
-        if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) { 
-            worldPosition = oldWorldPosition;
-            return; // early exit, cannot move
-        }
+    if (CheckCollisions(entities)) {
+        worldPosition = oldWorldPosition;
     }
 }
 
