@@ -44,11 +44,17 @@ protected:
     // Methods
     // Ticks
     virtual void Tick(Entity* player) = 0;
+    void TickPhysics(float frameTime, Vector4 mapBounds);
+    void TickAnimation(Entity* player);
 
     // Setters/Getters
     virtual void SetDependentFrameTime(float frameTime) = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
+    void SetAnimationRate(float animationRate);
+    void SetAnimationFramePeriod(float animationFramePeriod);
+    Rectangle GetCollider();
+    Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);
 
     // State Updates
     virtual void UpdatePosition() = 0;
@@ -61,25 +67,13 @@ protected:
 
 public:
     Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
-
-    // Setters & Getters
-    void SetAnimationRate(float animationRate);
-    void SetAnimationFramePeriod(float animationFramePeriod);
-    Vector2 GetWorldPosition();
-    Rectangle GetCollider();
-
-    // Methods
     void OverridePosition(Vector2 newPosition);
-    Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);
+    Vector2 GetWorldPosition();
 
     // Static Class Behavior
     static void AddToEntities(Entity* entity);
     static void TickEntities(Entity* player);
     static void TickPhysicsEntities(float frameTime, Vector4 mapBounds);
     static void TickAnimationEntities(Entity* player);
-
-    void TickPhysics(float frameTime, Vector4 mapBounds);
-    void TickAnimation(Entity* player);
-
 };
 #endif
