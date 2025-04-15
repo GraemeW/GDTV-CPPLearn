@@ -15,13 +15,7 @@ Prop::Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 wo
 // Unused for prop (unless we add prop animations in future)
 void Prop::SetDependentFrameTime(float frameTime) { }
 void Prop::Tick(Entity* player) { }
-void Prop::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {
-    Entity::TickPhysics(frameTime, mapBounds, entities, false);
-}
-void Prop::TickAnimation(Entity* player) {
-    Entity::TickAnimation(player);
-}
-void Prop::UpdatePosition(std::vector<Entity *> entities) { }
+void Prop::UpdatePosition() { }
 void Prop::UpdateAnimationFrame() { }
 
 // Simple Overrides -- No look, move for props

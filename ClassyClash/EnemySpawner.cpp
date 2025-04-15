@@ -44,10 +44,10 @@ Enemy* EnemySpawner::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2
     return nullptr;
 }
 
-void EnemySpawner::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities) {
+void EnemySpawner::TickPhysics(float frameTime, Vector4 mapBounds) {
     for (Enemy* enemy : enemies) {
         if (enemy == nullptr) { continue; }
-        enemy->TickPhysics(frameTime, mapBounds, entities, false);
+        enemy->TickPhysics(frameTime, mapBounds);
     }
 }
 

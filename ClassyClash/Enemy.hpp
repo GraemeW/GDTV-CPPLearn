@@ -24,14 +24,12 @@ protected:
     // Virtual Methods
     void SetDependentFrameTime(float frameTime) override;
     void Tick(Entity* player) override;
-    void UpdatePosition(std::vector<Entity *> entities) override;
+    void UpdatePosition() override;
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
     bool IsLookingLeft() override;
 
 public:
     Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq);
-    void TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false) override;
-    void TickAnimation(Entity* player) override;
 };
 #endif

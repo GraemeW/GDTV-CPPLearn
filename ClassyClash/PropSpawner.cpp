@@ -42,7 +42,7 @@ void PropSpawner::TickPhysics(float frameTime, Vector4 mapBounds) {
         if (prop == nullptr) { continue; }
 
         std::vector<Entity *> entities; // Empty vector, props don't move and thus cannot collide
-        prop->TickPhysics(frameTime, mapBounds, entities, false);
+        prop->TickPhysics(frameTime, mapBounds);
     }
 }
 

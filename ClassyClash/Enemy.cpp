@@ -27,14 +27,8 @@ void Enemy::Tick(Entity* player) {
         currentTarget = nullptr;
     }
 }
-void Enemy::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {
-    Entity::TickPhysics(frameTime, mapBounds, entities, false);
-}
-void Enemy::TickAnimation(Entity* player) {
-    Entity::TickAnimation(player);
-}
 
-void Enemy::UpdatePosition(std::vector<Entity *> entities) {
+void Enemy::UpdatePosition() {
     if (currentTarget == nullptr) { return; } // No target, no need to move
 
     Vector2 oldWorldPosition = Vector2(worldPosition);
@@ -42,7 +36,7 @@ void Enemy::UpdatePosition(std::vector<Entity *> entities) {
     Vector2 positionShift = Vector2Scale(Vector2Normalize(playerDirection), speed * frameTime);
     worldPosition = Vector2Add(worldPosition, positionShift);
     
-    if (CheckCollisions(entities)) {
+    if (CheckCollisions()) {
         worldPosition = oldWorldPosition;
     }
 }

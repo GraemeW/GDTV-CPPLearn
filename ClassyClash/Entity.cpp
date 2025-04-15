@@ -12,9 +12,7 @@ std::vector<Entity*> Entity::entities;
 // Methods
 Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS)
 : padding(padding), gameDimensions(gameDimensions), animationFramePeriod(1.0 / animationFPS) {
-    entities.push_back(this);
-
-    //Entity::AddToEntities(this);
+    Entity::AddToEntities(this);
     
     runTexture2D = LoadTexture(runTexturePath.c_str());
     idleTexture2D = LoadTexture(idleTexturePath.c_str());
@@ -37,16 +35,20 @@ Entity::~Entity() {
 }
 
 // Static Methods
-void Entity::AddToEntities(Entity* entity) {
-    entities.push_back(entity);
-}
+void Entity::AddToEntities(Entity* entity) { entities.push_back(entity); }
+
 void Entity::TickEntities(Entity* player) {
     for (Entity* entity : entities) {
         if (entity == nullptr) { continue; }
         entity->Tick(player);
     }
 }
-void Entity::TickPhysicsEntities(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {}
+void Entity::TickPhysicsEntities(float frameTime, Vector4 mapBounds) {
+    for (Entity* entity : entities) {
+        if (entity == nullptr) { continue; }
+        entity->TickPhysics(frameTime, mapBounds);
+    }
+}
 void Entity::TickAnimationEntities(Entity* player) {}
 
 // Setters / Getters
@@ -67,10 +69,10 @@ Rectangle Entity::GetCollider() {
 }
 
 // Default Methods
-void Entity::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) { 
+void Entity::TickPhysics(float frameTime, Vector4 mapBounds) { 
     SetDependentFrameTime(frameTime);
     
-    UpdatePosition(entities);
+    UpdatePosition();
     ClampPosition(mapBounds);
 }
 
@@ -87,7 +89,7 @@ void Entity::ClampPosition(Vector4 bounds) {
     if (worldPosition.x > bounds.w) { worldPosition.x = bounds.w; }
 }
 
-bool Entity::CheckCollisions(std::vector<Entity *> entities) {
+bool Entity::CheckCollisions() {
     for (Entity* entity : entities) {
         if (entity == this) { continue; } // Do not collide with self
         if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) {  return true; }

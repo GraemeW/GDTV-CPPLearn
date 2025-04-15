@@ -15,6 +15,7 @@ using std::string;
 class Entity
 {
 private:
+    // Static
     static std::vector<Entity *> entities;
 
 protected:
@@ -43,8 +44,6 @@ protected:
     // Methods
     // Ticks
     virtual void Tick(Entity* player) = 0;
-    virtual void TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
-    virtual void TickAnimation(Entity* player);
 
     // Setters/Getters
     virtual void SetDependentFrameTime(float frameTime) = 0;
@@ -52,12 +51,12 @@ protected:
     virtual bool IsLookingLeft() = 0;
 
     // State Updates
-    virtual void UpdatePosition(std::vector<Entity *> otherEntities) = 0;
+    virtual void UpdatePosition() = 0;
     virtual void UpdateAnimationFrame() = 0;
 
     // Helpers
     void ClampPosition(Vector4 bounds);
-    bool CheckCollisions(std::vector<Entity *> entities);
+    bool CheckCollisions();
     void DrawEntity(Entity* player);
 
 public:
@@ -76,8 +75,11 @@ public:
     // Static Class Behavior
     static void AddToEntities(Entity* entity);
     static void TickEntities(Entity* player);
-    static void TickPhysicsEntities(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
+    static void TickPhysicsEntities(float frameTime, Vector4 mapBounds);
     static void TickAnimationEntities(Entity* player);
+
+    void TickPhysics(float frameTime, Vector4 mapBounds);
+    void TickAnimation(Entity* player);
 
 };
 #endif

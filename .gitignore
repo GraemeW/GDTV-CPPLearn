@@ -14,3 +14,4 @@ PropManager
 Enemy
 EnemyManager
 PlayerMover
+PropSpawner
