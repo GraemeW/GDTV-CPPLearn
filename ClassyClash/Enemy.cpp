@@ -33,6 +33,8 @@ void Enemy::UpdatePosition() {
 
     Vector2 oldWorldPosition = Vector2(worldPosition);
     Vector2 playerDirection = Vector2Subtract(currentTarget->GetWorldPosition(), worldPosition);
+    isLookingLeft = Vector2DotProduct(playerDirection, Vector2{1.0, 0.0}) < 0.0;
+
     Vector2 positionShift = Vector2Scale(Vector2Normalize(playerDirection), speed * frameTime);
     worldPosition = Vector2Add(worldPosition, positionShift);
     
