@@ -5,14 +5,14 @@ using std::string;
 #include "raylib.h"
 #include "Enemy.hpp"
 
-#ifndef EnemyManager_h
-#define EnemyManager_h
+#ifndef EnemySpawner_h
+#define EnemySpawner_h
 enum EnemyType {
     Goblin,
     Slime
 };
 
-class EnemyManager
+class EnemySpawner
 {
 private:
     // Tunables:  Enemies
@@ -44,10 +44,10 @@ private:
     Enemy* SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate);
 
 public:
-    EnemyManager(Vector2 gameDimensions, float animationRate);
-    ~EnemyManager();
-    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities);
-    void TickAnimation();
+    EnemySpawner(Vector2 gameDimensions, float animationRate);
+    ~EnemySpawner();
+    void TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities);
+    void TickAnimation(Entity* player);
     std::vector<Entity *> GetEnemies();
 };
 #endif

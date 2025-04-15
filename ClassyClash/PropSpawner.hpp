@@ -1,5 +1,5 @@
 //
-// PropManager.h
+// PropSpawner.h
 // ClassyClash
 //
 
@@ -10,9 +10,9 @@ using std::string;
 #include "raylib.h"
 #include "Prop.hpp"
 
-#ifndef PropManager_h
-#define PropManager_h
-class PropManager
+#ifndef PropSpawner_h
+#define PropSpawner_h
+class PropSpawner
 {
 private:
     // Tunables:  Props
@@ -36,10 +36,10 @@ private:
     std::vector<Prop *> props;
 
 public:
-    PropManager(Vector2 gameDimensions);
-    ~PropManager();
-    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds);
-    void TickAnimation();
+    PropSpawner(Vector2 gameDimensions);
+    ~PropSpawner();
+    void TickPhysics(float frameTime, Vector4 mapBounds);
+    void TickAnimation(Entity* player);
     std::vector<Entity *> GetProps();
 };
 #endif

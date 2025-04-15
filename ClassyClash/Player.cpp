@@ -21,6 +21,14 @@ void Player::SetDependentFrameTime(float frameTime) {
     playerMover->SetDeltaFrameTime(frameTime);
 }
 
+void Player::Tick(Entity* player) { }
+void Player::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {
+    Entity::TickPhysics(frameTime, mapBounds, entities, isPlayer);
+}
+void Player::TickAnimation(Entity* player) {
+    Entity::TickAnimation(player);
+}
+
 void Player::UpdatePosition(std::vector<Entity *> entities) {
     Vector2 oldWorldPosition = Vector2(worldPosition);
 

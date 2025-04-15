@@ -5,8 +5,9 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "WorldMap.hpp"
-#include "PropManager.hpp"
-#include "EnemyManager.hpp"
+#include "Entity.hpp"
+#include "PropSpawner.hpp"
+#include "EnemySpawner.hpp"
 #include "Player.hpp"
 
 // ***Tunables***

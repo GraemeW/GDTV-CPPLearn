@@ -18,6 +18,7 @@ private:
 protected:
     // Virtual Methods
     void SetDependentFrameTime(float frameTime) override;
+    void Tick(Entity* player) override;
     void UpdatePosition(std::vector<Entity *> entities) override;
     void UpdateAnimationFrame() override;
     bool IsMoving() override;
@@ -26,5 +27,7 @@ protected:
 public:
     Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
     ~Player();
+    void TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false) override;
+    void TickAnimation(Entity* player) override;
 };
 #endif

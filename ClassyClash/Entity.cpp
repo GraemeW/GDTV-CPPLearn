@@ -6,8 +6,15 @@
 #include <string>
 #include "Entity.hpp"
 
+// Static
+std::vector<Entity*> Entity::entities;
+
+// Methods
 Entity::Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS)
 : padding(padding), gameDimensions(gameDimensions), animationFramePeriod(1.0 / animationFPS) {
+    entities.push_back(this);
+
+    //Entity::AddToEntities(this);
     
     runTexture2D = LoadTexture(runTexturePath.c_str());
     idleTexture2D = LoadTexture(idleTexturePath.c_str());
@@ -29,6 +36,19 @@ Entity::~Entity() {
     if (IsTextureValid(idleTexture2D)) { UnloadTexture(idleTexture2D); }
 }
 
+// Static Methods
+void Entity::AddToEntities(Entity* entity) {
+    entities.push_back(entity);
+}
+void Entity::TickEntities(Entity* player) {
+    for (Entity* entity : entities) {
+        if (entity == nullptr) { continue; }
+        entity->Tick(player);
+    }
+}
+void Entity::TickPhysicsEntities(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {}
+void Entity::TickAnimationEntities(Entity* player) {}
+
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 
@@ -37,11 +57,9 @@ void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animatio
 Vector2 Entity::GetWorldPosition() { return worldPosition; }
 
 Rectangle Entity::GetCollider() {
-    Vector2 screenPosition = GetScreenPosition(playerWorldPosition);
-
     Rectangle positionalRect{
-        screenPosition.x + padding,
-        screenPosition.y + padding,
+        worldPosition.x + padding,
+        worldPosition.y + padding,
         entityWidth - 2*padding,
         entityHeight - 2*padding
     };
@@ -49,18 +67,16 @@ Rectangle Entity::GetCollider() {
 }
 
 // Default Methods
-void Entity::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) { 
-    this->playerWorldPosition = playerWorldPosition;
+void Entity::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) { 
     SetDependentFrameTime(frameTime);
     
     UpdatePosition(entities);
     ClampPosition(mapBounds);
-    if (isPlayer) { this->playerWorldPosition = worldPosition; }
 }
 
-void Entity::TickAnimation(bool isPlayer) {
+void Entity::TickAnimation(Entity* player) {
     UpdateAnimationFrame();
-    DrawEntity(isPlayer);
+    DrawEntity(player);
 }
 
 void Entity::ClampPosition(Vector4 bounds) {
@@ -79,10 +95,12 @@ bool Entity::CheckCollisions(std::vector<Entity *> entities) {
     return false;
 }
 
-void Entity::DrawEntity(bool isPlayer) {
-    // Early return if no reason to render
-    Vector2 deltaPosition = Vector2Subtract(worldPosition, playerWorldPosition);
-    if (abs(deltaPosition.x) > gameDimensions.x || abs(deltaPosition.y) > gameDimensions.y) { return; }
+void Entity::DrawEntity(Entity* player) {
+    // Early returns if no reason to render
+    if (this != player) { // Note:  always render player
+        Vector2 deltaPosition = Vector2Subtract(worldPosition, player->GetWorldPosition());
+        if (abs(deltaPosition.x) > gameDimensions.x || abs(deltaPosition.y) > gameDimensions.y) { return; }
+    }
     
     // Texture Swaps
     if (this->IsMoving()) { currentTexture2D = runTexture2D; }
@@ -93,7 +111,7 @@ void Entity::DrawEntity(bool isPlayer) {
     if (this->IsLookingLeft()) { frameRectLook.width *= -1; }
 
     // Scaling
-    Vector2 screenPosition = GetScreenPosition(playerWorldPosition);
+    Vector2 screenPosition = GetScreenPosition(player->GetWorldPosition());
     Rectangle scaledFrameRect{
         screenPosition.x, screenPosition.y, entityWidth, entityHeight
     };

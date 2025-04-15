@@ -1,26 +1,26 @@
 //
-// EnemyManager.cpp
+// EnemySpawner.cpp
 // ClassyClash
 //
 
 #include <string>
 #include <iostream>
-#include "EnemyManager.hpp"
+#include "EnemySpawner.hpp"
 
-EnemyManager::EnemyManager(Vector2 gameDimensions, float animationRate) 
+EnemySpawner::EnemySpawner(Vector2 gameDimensions, float animationRate) 
 : gameDimensions(gameDimensions), animationRate(animationRate) {
     SpawnEnemies(EnemyType::Goblin, goblinCoordinates);
     SpawnEnemies(EnemyType::Slime, slimeCoordinates);
 }
 
-EnemyManager::~EnemyManager() {
+EnemySpawner::~EnemySpawner() {
     for (Enemy* enemy : enemies) {
         if (enemy == nullptr) { continue; }
         delete enemy;
     }
 }
 
-void EnemyManager::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
+void EnemySpawner::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
     for (Vector2 enemyCoordinate : enemyCoordinates) {
         Enemy* enemy = SpawnEnemy(enemyType, enemyCoordinate, gameDimensions, animationRate);
         if (enemy == nullptr) { break; }
@@ -28,7 +28,7 @@ void EnemyManager::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyC
     }
 }
 
-Enemy* EnemyManager::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate) {
+Enemy* EnemySpawner::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate) {
     switch(enemyType) {
         case EnemyType::Goblin:
         { 
@@ -44,21 +44,21 @@ Enemy* EnemyManager::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2
     return nullptr;
 }
 
-void EnemyManager::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities) {
+void EnemySpawner::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities) {
     for (Enemy* enemy : enemies) {
         if (enemy == nullptr) { continue; }
-        enemy->TickPhysics(frameTime, playerWorldPosition, mapBounds, entities, false);
+        enemy->TickPhysics(frameTime, mapBounds, entities, false);
     }
 }
 
-void EnemyManager::TickAnimation() {
+void EnemySpawner::TickAnimation(Entity* player) {
     for (Enemy* enemy : enemies) {
         if (enemy == nullptr) { continue; }
-        enemy->TickAnimation();
+        enemy->TickAnimation(player);
     }
 }
 
-std::vector<Entity *> EnemyManager::GetEnemies() {
+std::vector<Entity *> EnemySpawner::GetEnemies() {
     std::vector<Entity *> entities;
     for (Enemy* prop : enemies) {
         if (prop == nullptr) { continue; }

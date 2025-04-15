@@ -14,6 +14,9 @@ using std::string;
 #define Entity_h
 class Entity
 {
+private:
+    static std::vector<Entity *> entities;
+
 protected:
     virtual ~Entity();
 
@@ -36,18 +39,26 @@ protected:
     float entityHeight{0};
     Texture2D currentTexture2D;
     Vector2 worldPosition{0,0};
-    Vector2 playerWorldPosition{0,0};
 
     // Methods
+    // Ticks
+    virtual void Tick(Entity* player) = 0;
+    virtual void TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
+    virtual void TickAnimation(Entity* player);
+
+    // Setters/Getters
     virtual void SetDependentFrameTime(float frameTime) = 0;
-    virtual void UpdatePosition(std::vector<Entity *> otherEntities) = 0;
-    virtual void UpdateAnimationFrame() = 0;
     virtual bool IsMoving() = 0;
     virtual bool IsLookingLeft() = 0;
-    // Default 
+
+    // State Updates
+    virtual void UpdatePosition(std::vector<Entity *> otherEntities) = 0;
+    virtual void UpdateAnimationFrame() = 0;
+
+    // Helpers
     void ClampPosition(Vector4 bounds);
     bool CheckCollisions(std::vector<Entity *> entities);
-    void DrawEntity(bool isPlayer = false);
+    void DrawEntity(Entity* player);
 
 public:
     Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
@@ -59,9 +70,14 @@ public:
     Rectangle GetCollider();
 
     // Methods
-    void TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
-    void TickAnimation(bool isPlayer = false);
     void OverridePosition(Vector2 newPosition);
     Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);
+
+    // Static Class Behavior
+    static void AddToEntities(Entity* entity);
+    static void TickEntities(Entity* player);
+    static void TickPhysicsEntities(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer = false);
+    static void TickAnimationEntities(Entity* player);
+
 };
 #endif

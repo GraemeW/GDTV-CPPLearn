@@ -18,12 +18,27 @@ void Enemy::SetDependentFrameTime(float frameTime) { this->frameTime = frameTime
 bool Enemy::IsMoving() { return isMoving; }
 bool Enemy::IsLookingLeft() { return isLookingLeft; }
 
+void Enemy::Tick(Entity* player) { 
+    float playerDistanceSq = Vector2DistanceSqr(worldPosition, player->GetWorldPosition());
+    if (playerDistanceSq <= aggroRadiusSq) {
+        currentTarget = player;
+    }
+    else {
+        currentTarget = nullptr;
+    }
+}
+void Enemy::TickPhysics(float frameTime, Vector4 mapBounds, std::vector<Entity *> entities, bool isPlayer) {
+    Entity::TickPhysics(frameTime, mapBounds, entities, false);
+}
+void Enemy::TickAnimation(Entity* player) {
+    Entity::TickAnimation(player);
+}
+
 void Enemy::UpdatePosition(std::vector<Entity *> entities) {
-    float playerDistanceSq = Vector2DistanceSqr(worldPosition, playerWorldPosition);
-    if (playerDistanceSq > aggroRadiusSq) { return; }
+    if (currentTarget == nullptr) { return; } // No target, no need to move
 
     Vector2 oldWorldPosition = Vector2(worldPosition);
-    Vector2 playerDirection = Vector2Subtract(playerWorldPosition, worldPosition);
+    Vector2 playerDirection = Vector2Subtract(currentTarget->GetWorldPosition(), worldPosition);
     Vector2 positionShift = Vector2Scale(Vector2Normalize(playerDirection), speed * frameTime);
     worldPosition = Vector2Add(worldPosition, positionShift);
     

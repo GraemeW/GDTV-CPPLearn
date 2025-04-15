@@ -1,13 +1,13 @@
 //
-// PropManager.cpp
+// PropSpawner.cpp
 // ClassyClash
 //
 
 #include <string>
 #include <iostream>
-#include "PropManager.hpp"
+#include "PropSpawner.hpp"
 
-PropManager::PropManager(Vector2 gameDimensions) {
+PropSpawner::PropSpawner(Vector2 gameDimensions) {
     // Bushes
     for (Vector2 bushCoordinate : bushCoordinates) {
         Prop* prop = new Prop(bushTexturePath, bushPadding, gameDimensions, bushCoordinate);
@@ -30,30 +30,30 @@ PropManager::PropManager(Vector2 gameDimensions) {
     }
 }
 
-PropManager::~PropManager() {
+PropSpawner::~PropSpawner() {
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }
         delete prop;
     }
 }
 
-void PropManager::TickPhysics(float frameTime, Vector2 playerWorldPosition, Vector4 mapBounds) {
+void PropSpawner::TickPhysics(float frameTime, Vector4 mapBounds) {
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }
 
         std::vector<Entity *> entities; // Empty vector, props don't move and thus cannot collide
-        prop->TickPhysics(frameTime, playerWorldPosition, mapBounds, entities, false);
+        prop->TickPhysics(frameTime, mapBounds, entities, false);
     }
 }
 
-void PropManager::TickAnimation() {
+void PropSpawner::TickAnimation(Entity* player) {
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }
-        prop->TickAnimation();
+        prop->TickAnimation(player);
     }
 }
 
-std::vector<Entity *> PropManager::GetProps() { 
+std::vector<Entity *> PropSpawner::GetProps() { 
     std::vector<Entity *> entities;
     for (Prop* prop : props) {
         if (prop == nullptr) { continue; }

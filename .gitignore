@@ -13,3 +13,4 @@ Player
 PropManager
 Enemy
 EnemyManager
+PlayerMover
