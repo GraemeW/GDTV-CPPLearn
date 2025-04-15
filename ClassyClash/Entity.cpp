@@ -49,7 +49,12 @@ void Entity::TickPhysicsEntities(float frameTime, Vector4 mapBounds) {
         entity->TickPhysics(frameTime, mapBounds);
     }
 }
-void Entity::TickAnimationEntities(Entity* player) {}
+void Entity::TickAnimationEntities(Entity* player) {
+    for (Entity* entity : entities) {
+        if (entity == nullptr) { continue; }
+        entity->TickAnimation(player);
+    }
+}
 
 // Setters / Getters
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }

@@ -14,34 +14,17 @@ int main(int argc, char const *argv[])
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
 
-    std::vector<Entity *> gameEntities;
-    gameEntities.push_back(player);
-    for (Entity* prop : propSpawner->GetProps()) { gameEntities.push_back(prop); }
-    for (Entity* enemy : enemySpawner->GetEnemies()) { gameEntities.push_back(enemy); }
-
     // Main Game Loop
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
-
-        // Behavioural Updates
         Entity::TickEntities(player);
+        Entity::TickPhysicsEntities(dt, worldMap->GetMapBounds());
 
-        // Physics Updates
-        player->TickPhysics(dt, worldMap->GetMapBounds());
-        propSpawner->TickPhysics(dt, worldMap->GetMapBounds());
-        enemySpawner->TickPhysics(dt, worldMap->GetMapBounds());
-
-        // Rendering
         BeginDrawing();
-
         ClearBackground(backgroundColor);
         worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
-        player->TickAnimation(player);
-        propSpawner->TickAnimation(player);
-        enemySpawner->TickAnimation(player);
-
+        Entity::TickAnimationEntities(player);
         EndDrawing();
-        // Rendering Ends
     }
 
     delete worldMap;
