@@ -16,6 +16,8 @@ WorldMap::WorldMap(Vector2 gameDimensions) {
 }
 
 void WorldMap::DrawWorldMap(Vector2 mapPosition) {
+    mapPosition = Vector2Scale(mapPosition, -1.0); // Flip player's world position to get map position
+
     this->mapPosition = mapPosition;
     DrawTextureEx(texture2D, mapPosition, 0.0, mapScaler, WHITE);
 }

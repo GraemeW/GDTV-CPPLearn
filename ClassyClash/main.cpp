@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
 
         BeginDrawing();
         ClearBackground(backgroundColor);
-        worldMap->DrawWorldMap(Vector2Scale(player->GetWorldPosition(), -1.0)); // Flip player's world position to get map position
+        worldMap->DrawWorldMap(player->GetWorldPosition());
         Entity::TickAnimationEntities(player);
         EndDrawing();
     }
