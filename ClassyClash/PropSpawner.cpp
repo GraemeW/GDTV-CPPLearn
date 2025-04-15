@@ -36,29 +36,3 @@ PropSpawner::~PropSpawner() {
         delete prop;
     }
 }
-
-void PropSpawner::TickPhysics(float frameTime, Vector4 mapBounds) {
-    for (Prop* prop : props) {
-        if (prop == nullptr) { continue; }
-
-        std::vector<Entity *> entities; // Empty vector, props don't move and thus cannot collide
-        prop->TickPhysics(frameTime, mapBounds);
-    }
-}
-
-void PropSpawner::TickAnimation(Entity* player) {
-    for (Prop* prop : props) {
-        if (prop == nullptr) { continue; }
-        prop->TickAnimation(player);
-    }
-}
-
-std::vector<Entity *> PropSpawner::GetProps() { 
-    std::vector<Entity *> entities;
-    for (Prop* prop : props) {
-        if (prop == nullptr) { continue; }
-        Entity* entity = prop;
-        entities.push_back(entity);
-    }
-    return entities; 
-}

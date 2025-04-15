@@ -46,8 +46,5 @@ private:
 public:
     EnemySpawner(Vector2 gameDimensions, float animationRate);
     ~EnemySpawner();
-    void TickPhysics(float frameTime, Vector4 mapBounds);
-    void TickAnimation(Entity* player);
-    std::vector<Entity *> GetEnemies();
 };
 #endif

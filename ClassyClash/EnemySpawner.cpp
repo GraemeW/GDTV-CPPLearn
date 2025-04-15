@@ -43,27 +43,3 @@ Enemy* EnemySpawner::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2
     }
     return nullptr;
 }
-
-void EnemySpawner::TickPhysics(float frameTime, Vector4 mapBounds) {
-    for (Enemy* enemy : enemies) {
-        if (enemy == nullptr) { continue; }
-        enemy->TickPhysics(frameTime, mapBounds);
-    }
-}
-
-void EnemySpawner::TickAnimation(Entity* player) {
-    for (Enemy* enemy : enemies) {
-        if (enemy == nullptr) { continue; }
-        enemy->TickAnimation(player);
-    }
-}
-
-std::vector<Entity *> EnemySpawner::GetEnemies() {
-    std::vector<Entity *> entities;
-    for (Enemy* prop : enemies) {
-        if (prop == nullptr) { continue; }
-        Entity* entity = prop;
-        entities.push_back(entity);
-    }
-    return entities; 
-}

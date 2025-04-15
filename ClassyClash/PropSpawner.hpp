@@ -38,8 +38,5 @@ private:
 public:
     PropSpawner(Vector2 gameDimensions);
     ~PropSpawner();
-    void TickPhysics(float frameTime, Vector4 mapBounds);
-    void TickAnimation(Entity* player);
-    std::vector<Entity *> GetProps();
 };
 #endif
