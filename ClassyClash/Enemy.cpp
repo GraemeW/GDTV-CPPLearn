@@ -29,7 +29,7 @@ void Enemy::Tick(Entity* player) {
 }
 
 void Enemy::UpdatePosition() {
-    if (currentTarget == nullptr) { return; } // No target, no need to move
+    if (currentTarget == nullptr) { isMoving = false; return; } // No target, no need to move
 
     Vector2 oldWorldPosition = Vector2(worldPosition);
     Vector2 playerDirection = Vector2Subtract(currentTarget->GetWorldPosition(), worldPosition);
@@ -40,7 +40,9 @@ void Enemy::UpdatePosition() {
     
     if (CheckCollisions()) {
         worldPosition = oldWorldPosition;
+        isMoving = false;
     }
+    isMoving = true;
 }
 
 void Enemy::UpdateAnimationFrame() {

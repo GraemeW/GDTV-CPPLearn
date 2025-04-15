@@ -16,15 +16,15 @@ class EnemySpawner
 {
 private:
     // Tunables:  Enemies
-    string goblinTexturePathActive = "characters/goblin_idle_spritesheet.png";
-    string goblinTexturePathIdle = "characters/goblin_run_spritesheet.png";
+    string goblinTexturePathActive = "characters/goblin_run_spritesheet.png";
+    string goblinTexturePathIdle = "characters/goblin_idle_spritesheet.png";
     int goblinxyFrameCount[2] = {6, 1};
     float goblinSpeed{200.0};
     float goblinAggroRadiusSq{40000};
     std::vector<Vector2> goblinCoordinates {Vector2{800.0, 800.0}};
     float goblinPadding{0.0};
 
-    string slimeTexturePathActive = "characters/slime_idle_spritesheet.png";
+    string slimeTexturePathActive = "characters/slime_run_spritesheet.png";
     string slimeTexturePathIdle = "characters/slime_idle_spritesheet.png";
     int slimexyFrameCount[2] = {6, 1};
     float slimeSpeed{150.0};
