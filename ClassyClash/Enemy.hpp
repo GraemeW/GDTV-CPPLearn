@@ -16,18 +16,13 @@ private:
     float speed{};
     float aggroRadiusSq{};
     float frameTime{0};
-    bool isMoving{false};
-    bool isLookingLeft{false};
     Entity* currentTarget{nullptr};
 
 protected:
     // Virtual Methods
-    void SetDependentFrameTime(float frameTime) override;
     void Tick(Entity* player) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
-    bool IsMoving() override;
-    bool IsLookingLeft() override;
 
 public:
     Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq);

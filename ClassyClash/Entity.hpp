@@ -40,6 +40,8 @@ protected:
     float entityHeight{0};
     Texture2D currentTexture2D;
     Vector2 worldPosition{0,0};
+    Vector2 velocity{};
+    bool isLookingLeft;
 
     // Methods
     // Ticks
@@ -48,9 +50,8 @@ protected:
     void TickAnimation(Entity* player);
 
     // Setters/Getters
-    virtual void SetDependentFrameTime(float frameTime) = 0;
-    virtual bool IsMoving() = 0;
-    virtual bool IsLookingLeft() = 0;
+    bool IsLookingLeft();
+    bool IsMoving();
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
     Rectangle GetCollider();
@@ -59,6 +60,7 @@ protected:
     // State Updates
     virtual void UpdatePosition() = 0;
     virtual void UpdateAnimationFrame() = 0;
+    void UpdateLookDirection();
 
     // Helpers
     void ClampPosition(Vector4 bounds);

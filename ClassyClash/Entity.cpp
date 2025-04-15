@@ -57,6 +57,13 @@ void Entity::TickAnimationEntities(Entity* player) {
 }
 
 // Setters / Getters
+bool Entity::IsMoving() {
+    float currentSpeed = abs(Vector2Length(velocity));
+    return (currentSpeed > 0.0);
+}
+
+bool Entity::IsLookingLeft() { return isLookingLeft; }
+
 void Entity::SetAnimationRate(float animationRate){ animationFramePeriod = 1.0 / animationRate; }
 
 void Entity::SetAnimationFramePeriod(float animationFramePeriod){ this->animationFramePeriod = animationFramePeriod; }
@@ -75,15 +82,23 @@ Rectangle Entity::GetCollider() {
 
 // Default Methods
 void Entity::TickPhysics(float frameTime, Vector4 mapBounds) { 
-    SetDependentFrameTime(frameTime);
-    
+    this->frameTime = frameTime;
+
     UpdatePosition();
     ClampPosition(mapBounds);
+    UpdateLookDirection();
 }
 
 void Entity::TickAnimation(Entity* player) {
     UpdateAnimationFrame();
     DrawEntity(player);
+}
+
+void Entity::UpdateLookDirection() {
+    float xAxisSpeed = Vector2DotProduct(velocity, Vector2{1.0, 0.0});
+    if (abs(xAxisSpeed) > 0) {
+        isLookingLeft = xAxisSpeed < 0.0;
+    }
 }
 
 void Entity::ClampPosition(Vector4 bounds) {

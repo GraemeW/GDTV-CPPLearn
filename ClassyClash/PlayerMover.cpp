@@ -7,29 +7,16 @@
 #include <iostream>
 #include "PlayerMover.hpp"
 
-Vector2 PlayerMover::GetPositionShift() {
-    Vector2 positionShift{0.0, 0.0};
-    bool hasMoved = false;
+Vector2 PlayerMover::GetVelocity() {
+    Vector2 velocity{0.0, 0.0};
 
     // L/R
-    if (IsKeyDown(KEY_A)) { 
-        positionShift = Vector2Subtract(positionShift, Vector2{1.0, 0.0}); 
-        hasMoved = true;  
-        isLookingLeft = true;
-    }
-    if (IsKeyDown(KEY_D)) { 
-        positionShift = Vector2Add(positionShift, Vector2{1.0, 0.0}); 
-        hasMoved = true; 
-        isLookingLeft = false;
-    }
+    if (IsKeyDown(KEY_A)) { velocity = Vector2Subtract(velocity, Vector2{1.0, 0.0}); }
+    if (IsKeyDown(KEY_D)) { velocity = Vector2Add(velocity, Vector2{1.0, 0.0}); }
 
     // U/D
-    if (IsKeyDown(KEY_W)) { positionShift = Vector2Subtract(positionShift, Vector2{0.0, 1.0}); hasMoved = true; }
-    if (IsKeyDown(KEY_S)) { positionShift = Vector2Add(positionShift, Vector2{0.0, 1.0}); hasMoved = true; }
+    if (IsKeyDown(KEY_W)) { velocity = Vector2Subtract(velocity, Vector2{0.0, 1.0}); }
+    if (IsKeyDown(KEY_S)) { velocity = Vector2Add(velocity, Vector2{0.0, 1.0}); }
 
-    isMoving = hasMoved;
-    return Vector2Scale(Vector2Normalize(positionShift), speed * frameTime);
+    return Vector2Scale(Vector2Normalize(velocity), speed);
 }
-
-bool PlayerMover::IsMoving() { return isMoving; }
-bool PlayerMover::IsLookingLeft() { return isLookingLeft; }

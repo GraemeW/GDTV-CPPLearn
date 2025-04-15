@@ -16,18 +16,13 @@ Player::~Player() {
     delete playerMover;
 }
 
-void Player::SetDependentFrameTime(float frameTime) {
-    this->frameTime = frameTime;
-    playerMover->SetDeltaFrameTime(frameTime);
-}
-
 void Player::Tick(Entity* player) { }
 
 void Player::UpdatePosition() {
     Vector2 oldWorldPosition = Vector2(worldPosition);
 
-    Vector2 positionShift = playerMover->GetPositionShift();
-    worldPosition = Vector2Add(worldPosition, positionShift);
+    velocity = playerMover->GetVelocity();
+    worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
 
     if (CheckCollisions()) {
         worldPosition = oldWorldPosition;
@@ -44,6 +39,3 @@ void Player::UpdateAnimationFrame() {
         runningTime = 0.0;
     }
 }
-
-bool Player::IsMoving() { return playerMover->IsMoving(); }
-bool Player::IsLookingLeft() { return playerMover->IsLookingLeft(); }

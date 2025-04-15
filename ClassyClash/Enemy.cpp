@@ -14,10 +14,6 @@ Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2],
     this->aggroRadiusSq = aggroRadiusSq;
 }
 
-void Enemy::SetDependentFrameTime(float frameTime) { this->frameTime = frameTime; }
-bool Enemy::IsMoving() { return isMoving; }
-bool Enemy::IsLookingLeft() { return isLookingLeft; }
-
 void Enemy::Tick(Entity* player) { 
     float playerDistanceSq = Vector2DistanceSqr(worldPosition, player->GetWorldPosition());
     if (playerDistanceSq <= aggroRadiusSq) {
@@ -29,20 +25,17 @@ void Enemy::Tick(Entity* player) {
 }
 
 void Enemy::UpdatePosition() {
-    if (currentTarget == nullptr) { isMoving = false; return; } // No target, no need to move
+    if (currentTarget == nullptr) { velocity = Vector2{}; return; } // No target, no need to move
 
     Vector2 oldWorldPosition = Vector2(worldPosition);
     Vector2 playerDirection = Vector2Subtract(currentTarget->GetWorldPosition(), worldPosition);
-    isLookingLeft = Vector2DotProduct(playerDirection, Vector2{1.0, 0.0}) < 0.0;
 
-    Vector2 positionShift = Vector2Scale(Vector2Normalize(playerDirection), speed * frameTime);
-    worldPosition = Vector2Add(worldPosition, positionShift);
+    velocity = Vector2Scale(Vector2Normalize(playerDirection), speed);
+    worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
     
     if (CheckCollisions()) {
         worldPosition = oldWorldPosition;
-        isMoving = false;
     }
-    isMoving = true;
 }
 
 void Enemy::UpdateAnimationFrame() {

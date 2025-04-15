@@ -17,12 +17,9 @@ private:
 
 protected:
     // Virtual Methods
-    void SetDependentFrameTime(float frameTime) override;
     void Tick(Entity* player) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
-    bool IsMoving() override;
-    bool IsLookingLeft() override;
 
 public:
     Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);

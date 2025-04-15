@@ -16,12 +16,9 @@ class Prop : public Entity
 {
 protected:
     // Virtual Methods
-    void SetDependentFrameTime(float frameTime) override;
     void Tick(Entity* player) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
-    bool IsMoving() override;
-    bool IsLookingLeft() override;
 
 public:
     Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 worldPosition);

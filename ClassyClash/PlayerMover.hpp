@@ -17,16 +17,8 @@ private:
     // Tunables
     float speed{350.0};
 
-    // State
-    float frameTime{0};
-    bool isMoving{false};
-    bool isLookingLeft{false};
-
 public:
     // Methods
-    void SetDeltaFrameTime(float frameTime){ this->frameTime = frameTime; }
-    Vector2 GetPositionShift();
-    bool IsMoving();
-    bool IsLookingLeft();
+    Vector2 GetVelocity();
 };
 #endif
