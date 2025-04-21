@@ -15,7 +15,6 @@ private:
     // State
     float speed{};
     float aggroRadiusSq{};
-    float frameTime{0};
     Entity* currentTarget{nullptr};
 
 protected:

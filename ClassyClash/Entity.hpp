@@ -22,7 +22,7 @@ protected:
     virtual ~Entity();
 
     // Tunables
-    float spriteScaler = 4.0;
+    float spriteScaler{4.0};
 
     // Cached
     Texture2D runTexture2D;
