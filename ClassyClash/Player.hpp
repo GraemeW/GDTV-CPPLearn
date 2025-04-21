@@ -46,6 +46,7 @@ public:
     ~Player();
 
     // Other Methods
+    void ApplyDamage(float damage) override;
     void AddWeapon(string weaponTexture, string weaponActiveTexture);
 };
 #endif

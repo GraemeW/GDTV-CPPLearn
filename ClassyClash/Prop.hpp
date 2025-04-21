@@ -24,5 +24,6 @@ protected:
 
 public:
     Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 worldPosition);
+    void ApplyDamage(float damage) override;
 };
 #endif

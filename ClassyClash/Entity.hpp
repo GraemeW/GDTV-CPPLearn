@@ -67,15 +67,18 @@ protected:
     // Helpers
     void ClampPosition(Vector4 bounds);
     bool CheckCollisions(Rectangle collider);
+    std::vector<Entity *> FindCollidingEntities(Rectangle collider);
     void DrawEntity(Entity* player);
 
 public:
     Entity(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
+    virtual void ApplyDamage(float damage) = 0;
     void OverridePosition(Vector2 newPosition);
     Vector2 GetWorldPosition();
 
     // Static Class Behavior
     static void AddToEntities(Entity* entity);
+    static void RemoveFromEntities(Entity* entity);
     static void TickEntities(Entity* player);
     static void TickPhysicsEntities(float frameTime, Vector4 mapBounds);
     static void TickAnimationEntities(Entity* player);

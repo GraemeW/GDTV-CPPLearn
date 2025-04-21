@@ -18,6 +18,10 @@ Player::~Player() {
 
 void Player::Tick(Entity* player) { }
 
+void Player::ApplyDamage(float damage) {
+
+}
+
 void Player::UpdatePosition() {
     Vector2 oldWorldPosition = Vector2(worldPosition);
 
@@ -27,12 +31,6 @@ void Player::UpdatePosition() {
     if (CheckCollisions(this->GetCollider())) {
         worldPosition = oldWorldPosition;
     }
-
-    // TEMP:  Dummy code for checking weapon collider
-    // TODO:  Pull out, refactor into an attack method
-    if (CheckCollisions(GetWeaponCollider())) {
-        worldPosition = oldWorldPosition;
-    }
 }
 
 void Player::UpdateActions() {
@@ -40,6 +38,10 @@ void Player::UpdateActions() {
     
     if (!attackInCooldown && playerController->IsAttacking()) {
         attackInCooldown = true;
+
+        for (Entity* collidingEntity : FindCollidingEntities(GetWeaponCollider())) {
+            collidingEntity->ApplyDamage(10.0);
+        }
     }
 }
 

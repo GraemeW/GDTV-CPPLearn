@@ -36,6 +36,9 @@ Entity::~Entity() {
 
 // Static Methods
 void Entity::AddToEntities(Entity* entity) { entities.push_back(entity); }
+void Entity::RemoveFromEntities(Entity* entity) {
+    entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+}
 
 void Entity::TickEntities(Entity* player) {
     for (Entity* entity : entities) {
@@ -116,6 +119,15 @@ bool Entity::CheckCollisions(Rectangle collider) {
         if (CheckCollisionRecs(collider, entity->GetCollider())) {  return true; }
     }
     return false;
+}
+
+std::vector<Entity *> Entity::FindCollidingEntities(Rectangle collider) {
+    std::vector<Entity *> collidingEntities;
+    for (Entity* entity : entities) {
+        if (entity == this) { continue; } // Do not collide with self
+        if (CheckCollisionRecs(collider, entity->GetCollider())) { collidingEntities.push_back(entity); }
+    }
+    return collidingEntities;
 }
 
 void Entity::DrawEntity(Entity* player) {

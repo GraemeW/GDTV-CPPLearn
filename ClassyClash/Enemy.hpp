@@ -27,5 +27,7 @@ protected:
 
 public:
     Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq);
+    void ApplyDamage(float damage) override;
+    void KillEnemy();
 };
 #endif

@@ -24,6 +24,15 @@ void Enemy::Tick(Entity* player) {
     }
 }
 
+void Enemy::ApplyDamage(float damage) {
+    KillEnemy();
+}
+
+void Enemy::KillEnemy() {
+    Entity::RemoveFromEntities(this);
+    delete this;
+}
+
 void Enemy::UpdatePosition() {
     if (currentTarget == nullptr) { velocity = Vector2{}; return; } // No target, no need to move
 
