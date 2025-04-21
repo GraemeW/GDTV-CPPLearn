@@ -13,13 +13,6 @@ EnemySpawner::EnemySpawner(Vector2 gameDimensions, float animationRate)
     SpawnEnemies(EnemyType::Slime, slimeCoordinates);
 }
 
-EnemySpawner::~EnemySpawner() {
-    for (Enemy* enemy : enemies) {
-        if (enemy == nullptr) { continue; }
-        delete enemy;
-    }
-}
-
 void EnemySpawner::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
     for (Vector2 enemyCoordinate : enemyCoordinates) {
         Enemy* enemy = SpawnEnemy(enemyType, enemyCoordinate, gameDimensions, animationRate);

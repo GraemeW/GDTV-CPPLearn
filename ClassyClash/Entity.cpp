@@ -39,6 +39,12 @@ void Entity::AddToEntities(Entity* entity) { entities.push_back(entity); }
 void Entity::RemoveFromEntities(Entity* entity) {
     entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
 }
+void Entity::DeleteAllEntities() {
+    for (int i = 0; i < entities.size(); i++) {
+        if (entities[i] == nullptr) { continue; }
+        delete entities[i];
+    }
+}
 
 void Entity::TickEntities(Entity* player) {
     for (Entity* entity : entities) {

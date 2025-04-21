@@ -45,6 +45,5 @@ private:
 
 public:
     EnemySpawner(Vector2 gameDimensions, float animationRate);
-    ~EnemySpawner();
 };
 #endif

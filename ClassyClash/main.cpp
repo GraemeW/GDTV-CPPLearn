@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
     delete worldMap;
     delete propSpawner;
     delete enemySpawner;
-    delete player;
+    Entity::DeleteAllEntities();
     CloseWindow();
     return 0;
 }

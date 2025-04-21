@@ -79,6 +79,7 @@ public:
     // Static Class Behavior
     static void AddToEntities(Entity* entity);
     static void RemoveFromEntities(Entity* entity);
+    static void DeleteAllEntities();
     static void TickEntities(Entity* player);
     static void TickPhysicsEntities(float frameTime, Vector4 mapBounds);
     static void TickAnimationEntities(Entity* player);

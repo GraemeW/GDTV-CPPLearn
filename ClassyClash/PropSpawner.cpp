@@ -29,10 +29,3 @@ PropSpawner::PropSpawner(Vector2 gameDimensions) {
         props.push_back(prop);
     }
 }
-
-PropSpawner::~PropSpawner() {
-    for (Prop* prop : props) {
-        if (prop == nullptr) { continue; }
-        delete prop;
-    }
-}

@@ -37,6 +37,5 @@ private:
 
 public:
     PropSpawner(Vector2 gameDimensions);
-    ~PropSpawner();
 };
 #endif
