@@ -19,6 +19,7 @@ protected:
     void Tick(Entity* player) override;
     void UpdatePosition() override;
     void UpdateAnimationFrame() override;
+    void DrawAccessories() override;
 
 public:
     Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 worldPosition);

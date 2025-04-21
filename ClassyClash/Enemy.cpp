@@ -48,3 +48,5 @@ void Enemy::UpdateAnimationFrame() {
         runningTime = 0.0;
     }
 }
+
+void Enemy::DrawAccessories() { }

@@ -139,6 +139,7 @@ void Entity::DrawEntity(Entity* player) {
     };
 
     DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{}, 0.0, WHITE);
+    DrawAccessories();
 }
 
 void Entity::OverridePosition(Vector2 newPosition) {

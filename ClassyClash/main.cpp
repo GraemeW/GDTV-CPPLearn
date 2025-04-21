@@ -13,6 +13,7 @@ int main(int argc, char const *argv[])
     EnemySpawner* enemySpawner = new EnemySpawner(gameDimensions, animationRate);
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
     player->OverridePosition(startingPosition);
+    player->AddWeapon(weaponTexturePath, WeaponTexturePathActive);
 
     // Main Game Loop
     while (!WindowShouldClose()) {

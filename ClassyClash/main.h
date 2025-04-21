@@ -26,3 +26,5 @@ string knightTexturePathIdle = "characters/knight_idle_spritesheet.png";
 int knightxyFrameCount[2] = {6, 1};
 float knightPadding{0.0};
 Vector2 startingPosition{350.0, 350.0};
+string weaponTexturePath = "characters/weapon_sword.png";
+string WeaponTexturePathActive = "characters/weapon_sword_1.png";

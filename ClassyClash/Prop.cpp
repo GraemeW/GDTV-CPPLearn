@@ -16,3 +16,4 @@ Prop::Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 wo
 void Prop::Tick(Entity* player) { }
 void Prop::UpdatePosition() { }
 void Prop::UpdateAnimationFrame() { }
+void Prop::DrawAccessories() { }
