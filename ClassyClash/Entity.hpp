@@ -59,6 +59,7 @@ protected:
 
     // State Updates
     virtual void UpdatePosition() = 0;
+    virtual void UpdateActions() = 0;
     virtual void UpdateAnimationFrame() = 0;
     virtual void DrawAccessories() = 0;
     void UpdateLookDirection();

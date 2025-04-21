@@ -9,11 +9,11 @@
 // Methods
 Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS) 
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
-    playerMover = new PlayerMover();
+    playerController = new PlayerController();
 }
 
 Player::~Player() {
-    delete playerMover;
+    delete playerController;
 }
 
 void Player::Tick(Entity* player) { }
@@ -21,7 +21,7 @@ void Player::Tick(Entity* player) { }
 void Player::UpdatePosition() {
     Vector2 oldWorldPosition = Vector2(worldPosition);
 
-    velocity = playerMover->GetVelocity();
+    velocity = playerController->GetVelocity();
     worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
 
     if (CheckCollisions(this->GetCollider())) {
@@ -35,11 +35,20 @@ void Player::UpdatePosition() {
     }
 }
 
+void Player::UpdateActions() {
+    if (!hasWeapon) { return; }
+    
+    if (!attackInCooldown && playerController->IsAttacking()) {
+        attackInCooldown = true;
+    }
+}
+
 void Player::UpdateAnimationFrame() {
     runningTime += frameTime;
     if (runningTime >= animationFramePeriod) {
         animationFrame++;
         if (animationFrame > 6) {animationFrame = 0; } // End of animation queue
+        if (hasWeapon) { UpdateWeaponRotation(); }
 
         frameRect.x = animationFrame * entityWidth;
         runningTime = 0.0;
@@ -65,6 +74,13 @@ Vector2 Player::GetWeaponPosition() {
     weaponPosition.x += xOffset;
     weaponPosition.y += yOffset;
     return weaponPosition;
+}
+
+void Player::UpdateWeaponRotation() {
+    if (!attackInCooldown) { return; }
+
+    if (attackRotation > weaponMaxRotation) { attackInCooldown = false; attackRotation = 0.0; }
+    attackRotation += weaponRotationPerFrame;
 }
 
 Vector2 Player::GetWeaponScreenPosition() {
@@ -95,7 +111,7 @@ void Player::DrawAccessories() {
         if (isLookingLeft) { weaponFrameRectLook.width *= -1; }
 
         // Rotation
-        float rotation{swingWeaponRotation};
+        float rotation{attackRotation};
         if (isLookingLeft) { rotation *= -1; }
 
         // Scaling + Offsetting

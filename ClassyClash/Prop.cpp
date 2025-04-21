@@ -15,5 +15,6 @@ Prop::Prop(string texturePath, float padding, Vector2 gameDimensions, Vector2 wo
 // Unused for prop (unless we add prop animations in future)
 void Prop::Tick(Entity* player) { }
 void Prop::UpdatePosition() { }
+void Prop::UpdateActions() { }
 void Prop::UpdateAnimationFrame() { }
 void Prop::DrawAccessories() { }

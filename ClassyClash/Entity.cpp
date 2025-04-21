@@ -85,6 +85,7 @@ void Entity::TickPhysics(float frameTime, Vector4 mapBounds) {
     this->frameTime = frameTime;
 
     UpdatePosition();
+    UpdateActions();
     ClampPosition(mapBounds);
     UpdateLookDirection();
 }

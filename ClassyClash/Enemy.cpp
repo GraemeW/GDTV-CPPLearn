@@ -38,6 +38,8 @@ void Enemy::UpdatePosition() {
     }
 }
 
+void Enemy::UpdateActions() { }
+
 void Enemy::UpdateAnimationFrame() {
     runningTime += frameTime;
     if (runningTime >= animationFramePeriod) {

@@ -21,6 +21,7 @@ protected:
     // Virtual Methods
     void Tick(Entity* player) override;
     void UpdatePosition() override;
+    void UpdateActions() override;
     void UpdateAnimationFrame() override;
     void DrawAccessories() override;
 

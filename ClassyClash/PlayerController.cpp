@@ -5,9 +5,9 @@
 
 #include <string>
 #include <iostream>
-#include "PlayerMover.hpp"
+#include "PlayerController.hpp"
 
-Vector2 PlayerMover::GetVelocity() {
+Vector2 PlayerController::GetVelocity() {
     Vector2 velocity{0.0, 0.0};
 
     // L/R
@@ -19,4 +19,8 @@ Vector2 PlayerMover::GetVelocity() {
     if (IsKeyDown(KEY_S)) { velocity = Vector2Add(velocity, Vector2{0.0, 1.0}); }
 
     return Vector2Scale(Vector2Normalize(velocity), speed);
+}
+
+bool PlayerController::IsAttacking() {
+    return IsKeyDown(KEY_SPACE);
 }

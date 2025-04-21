@@ -1,5 +1,5 @@
 //
-// PlayerMover.h
+// PlayerController.h
 // ClassyClash
 //
 
@@ -9,9 +9,9 @@ using std::string;
 #include "raylib.h"
 #include "raymath.h"
 
-#ifndef PlayerMover_h
-#define PlayerMover_h
-class PlayerMover
+#ifndef PlayerController_h
+#define PlayerController_h
+class PlayerController
 {
 private:
     // Tunables
@@ -20,5 +20,6 @@ private:
 public:
     // Methods
     Vector2 GetVelocity();
+    bool IsAttacking();
 };
 #endif
