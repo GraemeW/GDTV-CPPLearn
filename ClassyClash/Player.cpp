@@ -24,7 +24,13 @@ void Player::UpdatePosition() {
     velocity = playerMover->GetVelocity();
     worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
 
-    if (CheckCollisions()) {
+    if (CheckCollisions(this->GetCollider())) {
+        worldPosition = oldWorldPosition;
+    }
+
+    // TEMP:  Dummy code for checking weapon collider
+    // TODO:  Pull out, refactor into an attack method
+    if (CheckCollisions(GetWeaponCollider())) {
         worldPosition = oldWorldPosition;
     }
 }
@@ -66,6 +72,17 @@ Vector2 Player::GetWeaponScreenPosition() {
         return Vector2Add(screenCenter, offset);
 }
 
+Rectangle Player::GetWeaponCollider() {
+    Vector2 weaponPosition = GetWeaponPosition();
+    Rectangle positionalRect {
+        weaponPosition.x,
+        weaponPosition.y - weaponFrameRect.height * spriteScaler / 2,
+        weaponFrameRect.width  * spriteScaler,
+        weaponFrameRect.height  * spriteScaler
+    };
+    return positionalRect;
+}
+
 void Player::DrawAccessories() {
     if (hasWeapon) {
         // Flipping
@@ -74,7 +91,6 @@ void Player::DrawAccessories() {
 
         // Scaling + Offsetting
         Vector2 weaponScreenPosition = GetWeaponScreenPosition();
-
         Rectangle scaledFrameRect{
             weaponScreenPosition.x, 
             weaponScreenPosition.y, 

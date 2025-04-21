@@ -65,7 +65,7 @@ protected:
 
     // Helpers
     void ClampPosition(Vector4 bounds);
-    bool CheckCollisions();
+    bool CheckCollisions(Rectangle collider);
     void DrawEntity(Entity* player);
 
 public:

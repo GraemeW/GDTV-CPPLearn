@@ -33,7 +33,7 @@ void Enemy::UpdatePosition() {
     velocity = Vector2Scale(Vector2Normalize(playerDirection), speed);
     worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
     
-    if (CheckCollisions()) {
+    if (CheckCollisions(this->GetCollider())) {
         worldPosition = oldWorldPosition;
     }
 }

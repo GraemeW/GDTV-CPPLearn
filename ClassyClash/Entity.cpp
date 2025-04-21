@@ -109,10 +109,10 @@ void Entity::ClampPosition(Vector4 bounds) {
     if (worldPosition.x > bounds.w) { worldPosition.x = bounds.w; }
 }
 
-bool Entity::CheckCollisions() {
+bool Entity::CheckCollisions(Rectangle collider) {
     for (Entity* entity : entities) {
         if (entity == this) { continue; } // Do not collide with self
-        if (CheckCollisionRecs(this->GetCollider(), entity->GetCollider())) {  return true; }
+        if (CheckCollisionRecs(collider, entity->GetCollider())) {  return true; }
     }
     return false;
 }

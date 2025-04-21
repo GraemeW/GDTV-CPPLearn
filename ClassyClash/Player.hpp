@@ -24,6 +24,7 @@ private:
     // Methods
     Vector2 GetWeaponPosition();
     Vector2 GetWeaponScreenPosition();
+    Rectangle GetWeaponCollider();
 
 protected:
     // Virtual Methods
