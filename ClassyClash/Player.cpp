@@ -58,10 +58,12 @@ void Player::AddWeapon(string weaponTexture, string weaponActiveTexture) {
 
 Vector2 Player::GetWeaponPosition() {
     Vector2 weaponPosition{this->GetWorldPosition()};
-    float xOffset = 2 * entityWidth / 3;
-    if (this->IsLookingLeft()) { xOffset *= -1; }
+    float xOffset = 0.65 * entityWidth;
+    if (this->IsLookingLeft()) { xOffset *= 0.5; }
+    float yOffset = 0.8 * entityWidth;
 
     weaponPosition.x += xOffset;
+    weaponPosition.y += yOffset;
     return weaponPosition;
 }
 
@@ -76,18 +78,25 @@ Rectangle Player::GetWeaponCollider() {
     Vector2 weaponPosition = GetWeaponPosition();
     Rectangle positionalRect {
         weaponPosition.x,
-        weaponPosition.y - weaponFrameRect.height * spriteScaler / 2,
+        weaponPosition.y - weaponFrameRect.height * spriteScaler,
         weaponFrameRect.width  * spriteScaler,
         weaponFrameRect.height  * spriteScaler
     };
+    if (IsLookingLeft()) { positionalRect.x -= weaponFrameRect.width * spriteScaler; }
     return positionalRect;
 }
 
 void Player::DrawAccessories() {
     if (hasWeapon) {
+        bool isLookingLeft{IsLookingLeft()};
+
         // Flipping
         Rectangle weaponFrameRectLook{weaponFrameRect};
-        if (this->IsLookingLeft()) { weaponFrameRectLook.width *= -1; }
+        if (isLookingLeft) { weaponFrameRectLook.width *= -1; }
+
+        // Rotation
+        float rotation{swingWeaponRotation};
+        if (isLookingLeft) { rotation *= -1; }
 
         // Scaling + Offsetting
         Vector2 weaponScreenPosition = GetWeaponScreenPosition();
@@ -99,8 +108,9 @@ void Player::DrawAccessories() {
         };
 
         // Origin Definition
-        Vector2 weaponOrigin{0.0, weaponFrameRect.height};
+        Vector2 weaponOrigin{0.0, weaponFrameRect.height * spriteScaler};
+        if (isLookingLeft) { weaponOrigin.x = weaponFrameRect.width * spriteScaler; }
 
-        DrawTexturePro(weaponTexture2D, weaponFrameRectLook, scaledFrameRect, weaponOrigin, 0.0, WHITE);
+        DrawTexturePro(weaponTexture2D, weaponFrameRectLook, scaledFrameRect, weaponOrigin, rotation, WHITE);
     }
 }

@@ -20,6 +20,7 @@ private:
     Texture2D weaponTexture2D;
     Texture2D weaponActiveTexture2D;
     Rectangle weaponFrameRect;
+    float swingWeaponRotation{35.0};
 
     // Methods
     Vector2 GetWeaponPosition();
