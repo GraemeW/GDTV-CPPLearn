@@ -28,7 +28,7 @@ void Player::UpdatePosition() {
     velocity = playerController->GetVelocity();
     worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
 
-    if (CheckCollisions(this->GetCollider())) {
+    if (CheckCollisions(this)) {
         worldPosition = oldWorldPosition;
     }
 }

@@ -19,6 +19,7 @@ int main(int argc, char const *argv[])
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         Entity::TickEntities(player);
+        enemySpawner->SpawnTick(dt);
         Entity::TickPhysicsEntities(dt, worldMap->GetMapBounds());
 
         BeginDrawing();

@@ -15,6 +15,11 @@ enum EnemyType {
 class EnemySpawner
 {
 private:
+    // Random Spawn Properties
+    int enemyTypeCount{2}; // match to Enum, no way to do this automatically in C++
+    Vector2 randomRange{400.0, 2400.0};
+    float randomSpawnTimer{1.0}; // seconds
+
     // Tunables:  Enemies
     string goblinTexturePathActive = "characters/goblin_run_spritesheet.png";
     string goblinTexturePathIdle = "characters/goblin_idle_spritesheet.png";
@@ -38,12 +43,15 @@ private:
 
     // State
     std::vector<Enemy *> enemies;
+    float accumulatedTime{0.0};
 
     // Methods
     void SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates);
     Enemy* SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate);
+    Enemy* SpawnRandomEnemy();
 
 public:
     EnemySpawner(Vector2 gameDimensions, float animationRate);
+    void SpawnTick(float frameTime);
 };
 #endif

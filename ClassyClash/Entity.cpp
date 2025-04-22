@@ -46,6 +46,15 @@ void Entity::DeleteAllEntities() {
     }
 }
 
+bool Entity::DeleteOverlappingEntity(Entity* entity) {
+    if (CheckCollisions(entity)) {
+        Entity::RemoveFromEntities(entity);
+        delete entity;
+        return true;
+    }
+    return false;
+}
+
 void Entity::TickEntities(Entity* player) {
     for (Entity* entity : entities) {
         if (entity == nullptr) { continue; }
@@ -119,10 +128,10 @@ void Entity::ClampPosition(Vector4 bounds) {
     if (worldPosition.x > bounds.w) { worldPosition.x = bounds.w; }
 }
 
-bool Entity::CheckCollisions(Rectangle collider) {
-    for (Entity* entity : entities) {
-        if (entity == this) { continue; } // Do not collide with self
-        if (CheckCollisionRecs(collider, entity->GetCollider())) {  return true; }
+bool Entity::CheckCollisions(Entity* entity) {
+    for (Entity* opponentEntity : entities) {
+        if (opponentEntity == entity) { continue; } // Do not collide with self
+        if (CheckCollisionRecs(entity->GetCollider(), opponentEntity->GetCollider())) {  return true; }
     }
     return false;
 }

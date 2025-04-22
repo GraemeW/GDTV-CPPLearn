@@ -54,8 +54,8 @@ protected:
     bool IsMoving();
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
-    Rectangle GetCollider();
     Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);
+    Rectangle GetCollider();
 
     // State Updates
     virtual void UpdatePosition() = 0;
@@ -66,7 +66,6 @@ protected:
 
     // Helpers
     void ClampPosition(Vector4 bounds);
-    bool CheckCollisions(Rectangle collider);
     std::vector<Entity *> FindCollidingEntities(Rectangle collider);
     void DrawEntity(Entity* player);
 
@@ -80,6 +79,8 @@ public:
     static void AddToEntities(Entity* entity);
     static void RemoveFromEntities(Entity* entity);
     static void DeleteAllEntities();
+    static bool CheckCollisions(Entity* entity);
+    static bool DeleteOverlappingEntity(Entity* entity);
     static void TickEntities(Entity* player);
     static void TickPhysicsEntities(float frameTime, Vector4 mapBounds);
     static void TickAnimationEntities(Entity* player);
