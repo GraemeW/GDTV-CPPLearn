@@ -13,6 +13,7 @@ class Player : public Entity
 {
 private:
     // Tunables
+    float weaponDamage{5.0};
     float weaponMaxRotation{40.0};
     float weaponRotationPerFrame{20.0};
 
@@ -42,7 +43,7 @@ protected:
     void DrawAccessories() override;
 
 public:
-    Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS);
+    Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, float hitPoints);
     ~Player();
 
     // Other Methods

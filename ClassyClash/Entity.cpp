@@ -58,18 +58,24 @@ bool Entity::DeleteOverlappingEntity(Entity* entity) {
 void Entity::TickEntities(Entity* player) {
     for (Entity* entity : entities) {
         if (entity == nullptr) { continue; }
+        if (!entity->IsAlive()) { continue; }
+
         entity->Tick(player);
     }
 }
 void Entity::TickPhysicsEntities(float frameTime, Vector4 mapBounds) {
     for (Entity* entity : entities) {
         if (entity == nullptr) { continue; }
+        if (!entity->IsAlive()) { continue; }
+
         entity->TickPhysics(frameTime, mapBounds);
     }
 }
 void Entity::TickAnimationEntities(Entity* player) {
     for (Entity* entity : entities) {
         if (entity == nullptr) { continue; }
+        if (!entity->IsAlive()) { continue; }
+
         entity->TickAnimation(player);
     }
 }
@@ -79,6 +85,8 @@ bool Entity::IsMoving() {
     float currentSpeed = abs(Vector2Length(velocity));
     return (currentSpeed > 0.0);
 }
+
+bool Entity::IsAlive() { return isAlive; }
 
 bool Entity::IsLookingLeft() { return isLookingLeft; }
 

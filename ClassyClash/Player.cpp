@@ -7,9 +7,10 @@
 #include "Player.hpp"
 
 // Methods
-Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS) 
+Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, float hitPoints) 
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     playerController = new PlayerController();
+    this->hitPoints = hitPoints;
 }
 
 Player::~Player() {
@@ -19,7 +20,10 @@ Player::~Player() {
 void Player::Tick(Entity* player) { }
 
 void Player::ApplyDamage(float damage) {
-
+    hitPoints -= damage;
+    if (hitPoints <= 0.0) {
+        isAlive = false;
+    }
 }
 
 void Player::UpdatePosition() {
@@ -40,7 +44,7 @@ void Player::UpdateActions() {
         attackInCooldown = true;
 
         for (Entity* collidingEntity : FindCollidingEntities(GetWeaponCollider())) {
-            collidingEntity->ApplyDamage(10.0);
+            collidingEntity->ApplyDamage(weaponDamage);
         }
     }
 }

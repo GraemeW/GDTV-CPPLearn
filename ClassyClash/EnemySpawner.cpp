@@ -28,13 +28,13 @@ Enemy* EnemySpawner::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2
     switch(enemyType) {
         case EnemyType::Goblin:
         { 
-            Enemy* goblin = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, coordinate, goblinSpeed, goblinAggroRadiusSq);
+            Enemy* goblin = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, coordinate, goblinSpeed, goblinAggroRadiusSq, goblinHitPoints, goblinDamage);
             if (Entity::DeleteOverlappingEntity(goblin)) { return nullptr; }
             return goblin;
         }
         case EnemyType::Slime:
         {
-            Enemy* slime = new Enemy(slimeTexturePathActive, slimeTexturePathActive, slimexyFrameCount, slimePadding, gameDimensions, animationRate, coordinate, slimeSpeed, slimeAggroRadiusSq);
+            Enemy* slime = new Enemy(slimeTexturePathActive, slimeTexturePathActive, slimexyFrameCount, slimePadding, gameDimensions, animationRate, coordinate, slimeSpeed, slimeAggroRadiusSq, slimeDamage, slimeHitPoints);
             if (Entity::DeleteOverlappingEntity(slime)) { return nullptr; }
             return slime;
         }

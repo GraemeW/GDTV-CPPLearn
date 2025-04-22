@@ -7,11 +7,13 @@
 #include "Enemy.hpp"
 
 // Methods
-Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq)
+Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage)
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     this->worldPosition = worldPosition;
     this->speed = speed;
     this->aggroRadiusSq = aggroRadiusSq;
+    this->hitPoints = hitPoints;
+    this->damage = damage;
 }
 
 void Enemy::Tick(Entity* player) { 
@@ -25,7 +27,11 @@ void Enemy::Tick(Entity* player) {
 }
 
 void Enemy::ApplyDamage(float damage) {
-    KillEnemy();
+    hitPoints -= damage;
+    if (hitPoints <= 0.0) {
+        isAlive = false;
+        KillEnemy();
+    }
 }
 
 void Enemy::KillEnemy() {

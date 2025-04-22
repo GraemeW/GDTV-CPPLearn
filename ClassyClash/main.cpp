@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
     WorldMap* worldMap = new WorldMap(gameDimensions);
     PropSpawner* propSpawner = new PropSpawner(gameDimensions);
     EnemySpawner* enemySpawner = new EnemySpawner(gameDimensions, animationRate);
-    Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate);
+    Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate, playerHitpoints);
     player->OverridePosition(startingPosition);
     player->AddWeapon(weaponTexturePath, WeaponTexturePathActive);
 

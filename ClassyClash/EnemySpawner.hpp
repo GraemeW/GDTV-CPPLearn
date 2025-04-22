@@ -28,6 +28,8 @@ private:
     float goblinAggroRadiusSq{40000};
     std::vector<Vector2> goblinCoordinates {Vector2{800.0, 800.0}};
     float goblinPadding{0.0};
+    float goblinHitPoints{10.0};
+    float goblinDamage{5.0};
 
     string slimeTexturePathActive = "characters/slime_run_spritesheet.png";
     string slimeTexturePathIdle = "characters/slime_idle_spritesheet.png";
@@ -36,6 +38,8 @@ private:
     float slimeAggroRadiusSq{80000};
     std::vector<Vector2> slimeCoordinates {Vector2{950.0, 2150.0}};
     float slimePadding{0.0};
+    float slimeHitPoints{5.0};
+    float slimeDamage{5.0};
 
     // Cached References
     Vector2 gameDimensions{};

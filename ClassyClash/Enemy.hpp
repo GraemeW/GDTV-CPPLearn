@@ -13,6 +13,7 @@ class Enemy : public Entity
 {
 private:
     // State
+    float damage{};
     float speed{};
     float aggroRadiusSq{};
     Entity* currentTarget{nullptr};
@@ -26,7 +27,7 @@ protected:
     void DrawAccessories() override;
 
 public:
-    Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq);
+    Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage);
     void ApplyDamage(float damage) override;
     void KillEnemy();
 };

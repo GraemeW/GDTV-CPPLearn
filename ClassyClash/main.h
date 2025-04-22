@@ -21,6 +21,7 @@ float animationRate{12.0}; // fps
 
 // Textures & Positions
 // Player
+float playerHitpoints{20.0};
 string knightTexturePathActive = "characters/knight_run_spritesheet.png";
 string knightTexturePathIdle = "characters/knight_idle_spritesheet.png";
 int knightxyFrameCount[2] = {6, 1};

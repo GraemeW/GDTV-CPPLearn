@@ -42,6 +42,8 @@ protected:
     Vector2 worldPosition{0,0};
     Vector2 velocity{};
     bool isLookingLeft;
+    bool isAlive{true};
+    float hitPoints{1.0}; // Override in child constructor
 
     // Methods
     // Ticks
@@ -50,6 +52,7 @@ protected:
     void TickAnimation(Entity* player);
 
     // Setters/Getters
+    bool IsAlive();
     bool IsLookingLeft();
     bool IsMoving();
     void SetAnimationRate(float animationRate);
