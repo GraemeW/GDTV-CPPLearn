@@ -8,8 +8,8 @@ using std::string;
 #ifndef EnemySpawner_h
 #define EnemySpawner_h
 enum EnemyType {
-    Goblin,
-    Slime
+    GoblinType,
+    SlimeType
 };
 
 class EnemySpawner
@@ -50,8 +50,8 @@ private:
     float accumulatedTime{0.0};
 
     // Methods
-    void SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates);
-    Enemy* SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate);
+    void SpawnEnemies(enum EnemyType enemyType, std::vector<Vector2> enemyCoordinates);
+    Enemy* SpawnEnemy(enum EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate);
     Enemy* SpawnRandomEnemy();
 
 public:

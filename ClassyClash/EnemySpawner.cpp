@@ -9,14 +9,14 @@
 
 EnemySpawner::EnemySpawner(Vector2 gameDimensions, float animationRate) 
 : gameDimensions(gameDimensions), animationRate(animationRate) {
-    SpawnEnemies(EnemyType::Goblin, goblinCoordinates);
-    SpawnEnemies(EnemyType::Slime, slimeCoordinates);
+    SpawnEnemies(EnemyType::GoblinType, goblinCoordinates);
+    SpawnEnemies(EnemyType::SlimeType, slimeCoordinates);
 
     // Seed the random number generator
     std::srand(std::time(0)); 
 }
 
-void EnemySpawner::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
+void EnemySpawner::SpawnEnemies(enum EnemyType enemyType, std::vector<Vector2> enemyCoordinates) {
     for (Vector2 enemyCoordinate : enemyCoordinates) {
         Enemy* enemy = SpawnEnemy(enemyType, enemyCoordinate, gameDimensions, animationRate);
         if (enemy == nullptr) { continue; }
@@ -24,15 +24,15 @@ void EnemySpawner::SpawnEnemies(EnemyType enemyType, std::vector<Vector2> enemyC
     }
 }
 
-Enemy* EnemySpawner::SpawnEnemy(EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate) {
+Enemy* EnemySpawner::SpawnEnemy(enum EnemyType enemyType, Vector2 coordinate, Vector2 gameDimensions, float animationRate) {
     switch(enemyType) {
-        case EnemyType::Goblin:
+        case EnemyType::GoblinType:
         { 
             Enemy* goblin = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, coordinate, goblinSpeed, goblinAggroRadiusSq, goblinHitPoints, goblinDamage);
             if (Entity::DeleteOverlappingEntity(goblin)) { return nullptr; }
             return goblin;
         }
-        case EnemyType::Slime:
+        case EnemyType::SlimeType:
         {
             Enemy* slime = new Enemy(slimeTexturePathActive, slimeTexturePathActive, slimexyFrameCount, slimePadding, gameDimensions, animationRate, coordinate, slimeSpeed, slimeAggroRadiusSq, slimeDamage, slimeHitPoints);
             if (Entity::DeleteOverlappingEntity(slime)) { return nullptr; }
@@ -47,7 +47,7 @@ Enemy* EnemySpawner::SpawnRandomEnemy() {
     float yCoordinate = randomRange.x + (randomRange.y - randomRange.x) * (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
     Vector2 coordinate{xCoordinate, yCoordinate};
 
-    EnemyType enemyType = static_cast<EnemyType>(rand() % enemyTypeCount);
+    enum EnemyType enemyType = static_cast<enum EnemyType>(rand() % enemyTypeCount);
     Enemy* enemy = SpawnEnemy(enemyType, coordinate, gameDimensions, animationRate);
     return enemy;
 }

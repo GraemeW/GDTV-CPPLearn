@@ -10,20 +10,22 @@
 Player::Player(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, float hitPoints) 
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     playerController = new PlayerController();
-    this->hitPoints = hitPoints;
+    this->entityType = EntityType::PlayerType;
+    this->hitPoints = hitPoints;    
 }
 
 Player::~Player() {
     delete playerController;
 }
 
-void Player::Tick(Entity* player) { }
-
 void Player::ApplyDamage(float damage) {
+    if (damageCooldownTimer > 0.0) { return; }
+
     hitPoints -= damage;
     if (hitPoints <= 0.0) {
         isAlive = false;
     }
+    damageCooldownTimer = damageCooldown;
 }
 
 void Player::UpdatePosition() {
@@ -37,9 +39,8 @@ void Player::UpdatePosition() {
     }
 }
 
-void Player::UpdateActions() {
+void Player::UpdateActions(Entity* player) {
     if (!hasWeapon) { return; }
-    
     if (!attackInCooldown && playerController->IsAttacking()) {
         attackInCooldown = true;
 
@@ -59,6 +60,9 @@ void Player::UpdateAnimationFrame() {
         frameRect.x = animationFrame * entityWidth;
         runningTime = 0.0;
     }
+
+    if (damageCooldownTimer > 0.0) { spriteColor = RED; damageCooldownTimer -= frameTime; }
+    else { spriteColor = WHITE; }
 }
 
 void Player::AddWeapon(string weaponTexture, string weaponActiveTexture) {

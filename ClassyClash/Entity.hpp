@@ -12,6 +12,12 @@ using std::string;
 
 #ifndef Entity_h
 #define Entity_h
+enum EntityType {
+    PropType,
+    EnemyType,
+    PlayerType
+};
+
 class Entity
 {
 private:
@@ -33,12 +39,14 @@ protected:
     float animationFramePeriod;
 
     // State
+    EntityType entityType{};
     float frameTime{0};
     int animationFrame{0};
     float runningTime{0};
     float entityWidth{0};
     float entityHeight{0};
     Texture2D currentTexture2D;
+    Color spriteColor{WHITE};
     Vector2 worldPosition{0,0};
     Vector2 velocity{};
     bool isLookingLeft;
@@ -47,7 +55,7 @@ protected:
 
     // Methods
     // Ticks
-    virtual void Tick(Entity* player) = 0;
+    void Tick(Entity* player);
     void TickPhysics(float frameTime, Vector4 mapBounds);
     void TickAnimation(Entity* player);
 
@@ -58,11 +66,10 @@ protected:
     void SetAnimationRate(float animationRate);
     void SetAnimationFramePeriod(float animationFramePeriod);
     Vector2 GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer = false);
-    Rectangle GetCollider();
 
     // State Updates
     virtual void UpdatePosition() = 0;
-    virtual void UpdateActions() = 0;
+    virtual void UpdateActions(Entity* player) = 0;
     virtual void UpdateAnimationFrame() = 0;
     virtual void DrawAccessories() = 0;
     void UpdateLookDirection();
@@ -77,6 +84,8 @@ public:
     virtual void ApplyDamage(float damage) = 0;
     void OverridePosition(Vector2 newPosition);
     Vector2 GetWorldPosition();
+    Rectangle GetCollider();
+    EntityType GetEntityType() { return entityType; }
 
     // Static Class Behavior
     static void AddToEntities(Entity* entity);

@@ -9,21 +9,12 @@
 // Methods
 Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage)
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
+    this->entityType = EntityType::EnemyType;
     this->worldPosition = worldPosition;
     this->speed = speed;
     this->aggroRadiusSq = aggroRadiusSq;
     this->hitPoints = hitPoints;
     this->damage = damage;
-}
-
-void Enemy::Tick(Entity* player) { 
-    float playerDistanceSq = Vector2DistanceSqr(worldPosition, player->GetWorldPosition());
-    if (playerDistanceSq <= aggroRadiusSq) {
-        currentTarget = player;
-    }
-    else {
-        currentTarget = nullptr;
-    }
 }
 
 void Enemy::ApplyDamage(float damage) {
@@ -53,7 +44,19 @@ void Enemy::UpdatePosition() {
     }
 }
 
-void Enemy::UpdateActions() { }
+void Enemy::UpdateActions(Entity* player) {
+    float playerDistanceSq = Vector2DistanceSqr(worldPosition, player->GetWorldPosition());
+    if (playerDistanceSq <= aggroRadiusSq) {
+        currentTarget = player;
+    }
+    else {
+        currentTarget = nullptr;
+    }
+
+    if (CheckCollisionRecs(this->GetCollider(), player->GetCollider())) {
+        player->ApplyDamage(damage);
+    }
+}
 
 void Enemy::UpdateAnimationFrame() {
     runningTime += frameTime;

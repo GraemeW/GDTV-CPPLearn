@@ -107,11 +107,14 @@ Rectangle Entity::GetCollider() {
 }
 
 // Default Methods
+void Entity::Tick(Entity* player) {
+    UpdateActions(player);
+}
+
 void Entity::TickPhysics(float frameTime, Vector4 mapBounds) { 
     this->frameTime = frameTime;
 
     UpdatePosition();
-    UpdateActions();
     ClampPosition(mapBounds);
     UpdateLookDirection();
 }
@@ -139,7 +142,11 @@ void Entity::ClampPosition(Vector4 bounds) {
 bool Entity::CheckCollisions(Entity* entity) {
     for (Entity* opponentEntity : entities) {
         if (opponentEntity == entity) { continue; } // Do not collide with self
-        if (CheckCollisionRecs(entity->GetCollider(), opponentEntity->GetCollider())) {  return true; }
+
+        // Only collide with props
+        if (opponentEntity->GetEntityType() == EntityType::PropType) {
+            if (CheckCollisionRecs(entity->GetCollider(), opponentEntity->GetCollider())) {  return true; }
+        }
     }
     return false;
 }
@@ -174,7 +181,7 @@ void Entity::DrawEntity(Entity* player) {
         screenPosition.x, screenPosition.y, entityWidth, entityHeight
     };
 
-    DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{}, 0.0, WHITE);
+    DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{}, 0.0, spriteColor);
     DrawAccessories();
 }
 

@@ -20,9 +20,8 @@ private:
 
 protected:
     // Virtual Methods
-    void Tick(Entity* player) override;
     void UpdatePosition() override;
-    void UpdateActions() override;
+    void UpdateActions(Entity* player) override;
     void UpdateAnimationFrame() override;
     void DrawAccessories() override;
 
