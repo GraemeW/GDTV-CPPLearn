@@ -192,11 +192,11 @@ void Entity::DrawEntity(Entity* player) {
 
 void Entity::DrawHealth(Entity* player) {
     std::string hitPointString = "";
-    hitPointString.append(std::to_string(hitPoints), 0, 4);
+    hitPointString.append(std::to_string(hitPoints), 0, 2);
 
     Vector2 textPosition = GetScreenPosition(player->GetWorldPosition());
     textPosition.y -= frameRect.height * 0.5;
-    textPosition.x += frameRect.width * 0.5;
+    textPosition.x += frameRect.width;
     DrawText(hitPointString.c_str(), textPosition.x, textPosition.y, healthFontSize, healthFontColor);
 }
 
