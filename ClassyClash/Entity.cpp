@@ -113,6 +113,7 @@ void Entity::Tick(Entity* player) {
 
 void Entity::TickPhysics(float frameTime, Vector4 mapBounds) { 
     this->frameTime = frameTime;
+    if (damageCooldownTimer > 0.0) { damageCooldownTimer -= frameTime; }
 
     UpdatePosition();
     ClampPosition(mapBounds);

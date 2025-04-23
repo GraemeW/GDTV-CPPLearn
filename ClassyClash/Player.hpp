@@ -16,7 +16,6 @@ private:
     float weaponDamage{5.0};
     float weaponMaxRotation{40.0};
     float weaponRotationPerFrame{20.0};
-    float damageCooldown{1.5}; // seconds
 
     // Cached References
     PlayerController* playerController;
@@ -28,7 +27,6 @@ private:
     bool hasWeapon{0};
     bool attackInCooldown{false};
     float attackRotation{0};
-    float damageCooldownTimer{0};
 
     // Methods
     Vector2 GetWeaponPosition();

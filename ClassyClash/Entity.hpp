@@ -29,6 +29,7 @@ protected:
 
     // Tunables
     float spriteScaler{4.0};
+    float damageCooldown{1.5}; // seconds
 
     // Cached
     Texture2D runTexture2D;
@@ -40,6 +41,7 @@ protected:
 
     // State
     EntityType entityType{};
+
     float frameTime{0};
     int animationFrame{0};
     float runningTime{0};
@@ -50,8 +52,10 @@ protected:
     Vector2 worldPosition{0,0};
     Vector2 velocity{};
     bool isLookingLeft;
+    
     bool isAlive{true};
     float hitPoints{1.0}; // Override in child constructor
+    float damageCooldownTimer{0};
 
     // Methods
     // Ticks

@@ -30,6 +30,7 @@ private:
     float goblinPadding{0.0};
     float goblinHitPoints{10.0};
     float goblinDamage{5.0};
+    float goblinDamageCooldown{0.25};
 
     string slimeTexturePathActive = "characters/slime_run_spritesheet.png";
     string slimeTexturePathIdle = "characters/slime_idle_spritesheet.png";
@@ -40,6 +41,7 @@ private:
     float slimePadding{0.0};
     float slimeHitPoints{5.0};
     float slimeDamage{5.0};
+    float slimeDamageCooldown{0.10};
 
     // Cached References
     Vector2 gameDimensions{};

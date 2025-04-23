@@ -61,7 +61,7 @@ void Player::UpdateAnimationFrame() {
         runningTime = 0.0;
     }
 
-    if (damageCooldownTimer > 0.0) { spriteColor = RED; damageCooldownTimer -= frameTime; }
+    if (damageCooldownTimer > 0.0) { spriteColor = RED; }
     else { spriteColor = WHITE; }
 }
 

@@ -26,7 +26,7 @@ protected:
     void DrawAccessories() override;
 
 public:
-    Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage);
+    Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage, float damageCooldown);
     void ApplyDamage(float damage) override;
     void KillEnemy();
 };

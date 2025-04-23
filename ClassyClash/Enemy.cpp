@@ -7,7 +7,7 @@
 #include "Enemy.hpp"
 
 // Methods
-Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage)
+Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2], float padding, Vector2 gameDimensions, float animationFPS, Vector2 worldPosition, float speed, float aggroRadiusSq, float hitPoints, float damage, float damageCooldown)
 : Entity(runTexturePath, idleTexturePath, xyFrameCount, padding, gameDimensions, animationFPS) {
     this->entityType = EntityType::EnemyType;
     this->worldPosition = worldPosition;
@@ -15,10 +15,12 @@ Enemy::Enemy(string runTexturePath, string idleTexturePath, int xyFrameCount[2],
     this->aggroRadiusSq = aggroRadiusSq;
     this->hitPoints = hitPoints;
     this->damage = damage;
+    this->damageCooldown = damageCooldown;
 }
 
 void Enemy::ApplyDamage(float damage) {
     hitPoints -= damage;
+    damageCooldownTimer = damageCooldown;
     if (hitPoints <= 0.0) {
         isAlive = false;
         KillEnemy();
@@ -37,6 +39,7 @@ void Enemy::UpdatePosition() {
     Vector2 playerDirection = Vector2Subtract(currentTarget->GetWorldPosition(), worldPosition);
 
     velocity = Vector2Scale(Vector2Normalize(playerDirection), speed);
+    if (damageCooldownTimer > 0.0) { velocity = Vector2Scale(velocity, -1.0); }
     worldPosition = Vector2Add(worldPosition, Vector2Scale(velocity, frameTime));
     
     if (CheckCollisions(this)) {
@@ -67,6 +70,9 @@ void Enemy::UpdateAnimationFrame() {
         frameRect.x = animationFrame * entityWidth;
         runningTime = 0.0;
     }
+
+    if (damageCooldownTimer > 0.0) { spriteColor = RED; }
+    else { spriteColor = WHITE; }
 }
 
 void Enemy::DrawAccessories() { }
