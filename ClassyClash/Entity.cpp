@@ -184,15 +184,28 @@ void Entity::DrawEntity(Entity* player) {
 
     DrawTexturePro(currentTexture2D, frameRectLook, scaledFrameRect, Vector2{}, 0.0, spriteColor);
     DrawAccessories();
+
+    if (entityType != EntityType::PropType) {
+        DrawHealth(player);
+    }
+}
+
+void Entity::DrawHealth(Entity* player) {
+    std::string hitPointString = "";
+    hitPointString.append(std::to_string(hitPoints), 0, 4);
+
+    Vector2 textPosition = GetScreenPosition(player->GetWorldPosition());
+    textPosition.y -= frameRect.height * 0.5;
+    textPosition.x += frameRect.width * 0.5;
+    DrawText(hitPointString.c_str(), textPosition.x, textPosition.y, healthFontSize, healthFontColor);
 }
 
 void Entity::OverridePosition(Vector2 newPosition) {
     worldPosition = newPosition;
 }
 
-Vector2 Entity::GetScreenPosition(Vector2 playerWorldPosition, bool isPlayer) {
+Vector2 Entity::GetScreenPosition(Vector2 playerWorldPosition) {
     Vector2 screenCenter = Vector2{gameDimensions.x/2,gameDimensions.y/2};
-    if (isPlayer) { return Vector2Subtract(screenCenter, Vector2{entityWidth/2, entityHeight/2}); }
 
     Vector2 offset = Vector2Subtract(worldPosition, playerWorldPosition);
     return Vector2Add(screenCenter, offset);

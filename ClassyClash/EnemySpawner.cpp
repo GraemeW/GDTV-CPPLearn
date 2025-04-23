@@ -7,8 +7,8 @@
 #include <iostream>
 #include "EnemySpawner.hpp"
 
-EnemySpawner::EnemySpawner(Vector2 gameDimensions, float animationRate) 
-: gameDimensions(gameDimensions), animationRate(animationRate) {
+EnemySpawner::EnemySpawner(Vector2 gameDimensions, float animationRate, ScoreBoard* scoreBoard) 
+: gameDimensions(gameDimensions), animationRate(animationRate), scoreBoard(scoreBoard) {
     SpawnEnemies(EnemyType::GoblinType, goblinCoordinates);
     SpawnEnemies(EnemyType::SlimeType, slimeCoordinates);
 
@@ -28,13 +28,13 @@ Enemy* EnemySpawner::SpawnEnemy(enum EnemyType enemyType, Vector2 coordinate, Ve
     switch(enemyType) {
         case EnemyType::GoblinType:
         { 
-            Enemy* goblin = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, coordinate, goblinSpeed, goblinAggroRadiusSq, goblinHitPoints, goblinDamage, goblinDamageCooldown);
+            Enemy* goblin = new Enemy(goblinTexturePathActive, goblinTexturePathIdle, goblinxyFrameCount, goblinPadding, gameDimensions, animationRate, coordinate, goblinSpeed, goblinAggroRadiusSq, goblinHitPoints, goblinDamage, goblinDamageCooldown, goblinScore, scoreBoard);
             if (Entity::DeleteOverlappingEntity(goblin)) { return nullptr; }
             return goblin;
         }
         case EnemyType::SlimeType:
         {
-            Enemy* slime = new Enemy(slimeTexturePathActive, slimeTexturePathActive, slimexyFrameCount, slimePadding, gameDimensions, animationRate, coordinate, slimeSpeed, slimeAggroRadiusSq, slimeDamage, slimeHitPoints, slimeDamageCooldown);
+            Enemy* slime = new Enemy(slimeTexturePathActive, slimeTexturePathActive, slimexyFrameCount, slimePadding, gameDimensions, animationRate, coordinate, slimeSpeed, slimeAggroRadiusSq, slimeDamage, slimeHitPoints, slimeDamageCooldown, slimeScore, scoreBoard);
             if (Entity::DeleteOverlappingEntity(slime)) { return nullptr; }
             return slime;
         }

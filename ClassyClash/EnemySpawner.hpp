@@ -4,6 +4,7 @@ using std::string;
 #include <vector>
 #include "raylib.h"
 #include "Enemy.hpp"
+#include "ScoreBoard.hpp"
 
 #ifndef EnemySpawner_h
 #define EnemySpawner_h
@@ -31,6 +32,7 @@ private:
     float goblinHitPoints{10.0};
     float goblinDamage{5.0};
     float goblinDamageCooldown{0.25};
+    int goblinScore{2};
 
     string slimeTexturePathActive = "characters/slime_run_spritesheet.png";
     string slimeTexturePathIdle = "characters/slime_idle_spritesheet.png";
@@ -42,10 +44,12 @@ private:
     float slimeHitPoints{5.0};
     float slimeDamage{5.0};
     float slimeDamageCooldown{0.10};
+    int slimeScore{1};
 
     // Cached References
     Vector2 gameDimensions{};
     float animationRate{};
+    ScoreBoard* scoreBoard;
 
     // State
     std::vector<Enemy *> enemies;
@@ -57,7 +61,7 @@ private:
     Enemy* SpawnRandomEnemy();
 
 public:
-    EnemySpawner(Vector2 gameDimensions, float animationRate);
+    EnemySpawner(Vector2 gameDimensions, float animationRate, ScoreBoard* scoreBoard);
     void SpawnTick(float frameTime);
 };
 #endif

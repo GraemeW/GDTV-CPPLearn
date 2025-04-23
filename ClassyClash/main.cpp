@@ -9,11 +9,14 @@ int main(int argc, char const *argv[])
     InitWindow(gameDimensions.x, gameDimensions.y, gameTitle.c_str());
     SetTargetFPS(targetFPS);
     WorldMap* worldMap = new WorldMap(gameDimensions);
-    PropSpawner* propSpawner = new PropSpawner(gameDimensions);
-    EnemySpawner* enemySpawner = new EnemySpawner(gameDimensions, animationRate);
     Player* player = new Player(knightTexturePathActive, knightTexturePathIdle, knightxyFrameCount, knightPadding, gameDimensions, animationRate, playerHitpoints);
     player->OverridePosition(startingPosition);
     player->AddWeapon(weaponTexturePath, WeaponTexturePathActive);
+
+    ScoreBoard* scoreBoard = new ScoreBoard(0, player, gameDimensions);
+
+    PropSpawner* propSpawner = new PropSpawner(gameDimensions);
+    EnemySpawner* enemySpawner = new EnemySpawner(gameDimensions, animationRate, scoreBoard);
 
     // Main Game Loop
     while (!WindowShouldClose()) {
@@ -26,10 +29,12 @@ int main(int argc, char const *argv[])
         ClearBackground(backgroundColor);
         worldMap->DrawWorldMap(player->GetWorldPosition());
         Entity::TickAnimationEntities(player);
+        scoreBoard->TickScore();
         EndDrawing();
     }
 
     delete worldMap;
+    delete scoreBoard;
     delete propSpawner;
     delete enemySpawner;
     Entity::DeleteAllEntities();

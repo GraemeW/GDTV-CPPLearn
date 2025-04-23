@@ -9,6 +9,7 @@
 #include "PropSpawner.hpp"
 #include "EnemySpawner.hpp"
 #include "Player.hpp"
+#include "ScoreBoard.hpp"
 
 // ***Tunables***
 // Window + Game Settings
